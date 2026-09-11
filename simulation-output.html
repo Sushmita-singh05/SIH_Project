@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation Output — QuantumLeap-AI</title>
+  <meta name="description" content="Explore the quantum simulation results for your circuit. View measurement histograms, Bloch sphere, and state-vector analysis on QuantumLeap-AI." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/header.css" />
+
+  <!-- Page-specific Styles -->
+  <link rel="stylesheet" href="css/simulation-output.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ===== SIDEBAR (Practice is active) ===== -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <a href="index.html" class="sidebar-logo-link" aria-label="QuantumLeap-AI — go to Dashboard">
+          <div class="logo-mark" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#2563EB" stroke-width="1.5" fill="none" transform="rotate(-30 16 16)" opacity="0.6"/>
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#4F46E5" stroke-width="1.5" fill="none" transform="rotate(30 16 16)" opacity="0.4"/>
+              <circle cx="16" cy="16" r="3.5" fill="#2563EB"/>
+              <circle cx="5" cy="11" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="27" cy="21" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="26" cy="10" r="1" fill="#2563EB" opacity="0.5"/>
+            </svg>
+          </div>
+          <span class="logo-text">QuantumLeap<span class="logo-accent">-AI</span></span>
+        </a>
+      </div>
+
+      <!-- Primary Nav -->
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link" data-route="dashboard" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lesson-superposition.html" class="nav-link" data-route="learn" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Learn</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="circuit-builder.html" class="nav-link active" data-route="practice" aria-current="page" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <span class="nav-label">Practice</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="progress.html" class="nav-link" data-route="progress" tabindex="0" aria-label="Progress">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </span>
+              <span class="nav-label">Progress</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Bottom Nav -->
+      <div class="sidebar-bottom">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="#settings" class="nav-link" data-route="settings" tabindex="0" aria-label="Settings">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#help" class="nav-link" data-route="help" tabindex="0" aria-label="Help &amp; Documentation">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </span>
+              <span class="nav-label">Help</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN AREA ===== -->
+    <div class="main-area">
+
+      <!-- TOP HEADER -->
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <h1 class="page-title">Simulate</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="header-action" id="notifWrapper">
+            <button class="icon-btn" id="notifBtn" aria-label="Notifications — 2 unread" aria-expanded="false" aria-haspopup="true">
+              <span aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+              </span>
+              <span class="notif-badge" aria-label="2 unread notifications">2</span>
+            </button>
+            <div class="popover notif-popover" id="notifPopover" role="dialog" aria-label="Notifications" aria-hidden="true">
+              <div class="popover-header">
+                <span class="popover-title">Notifications</span>
+                <button class="popover-close" id="notifClose" aria-label="Close notifications">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <ul class="notif-list" role="list">
+                <li class="notif-item unread">
+                  <div class="notif-dot" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">New lesson <strong>Quantum Entanglement</strong> is now available.</p>
+                    <time class="notif-time" datetime="2026-09-05">Yesterday</time>
+                  </div>
+                </li>
+                <li class="notif-item unread">
+                  <div class="notif-dot" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">You're 38% away from completing <strong>Unit 1</strong>.</p>
+                    <time class="notif-time" datetime="2026-09-04">2 days ago</time>
+                  </div>
+                </li>
+                <li class="notif-item">
+                  <div class="notif-dot read" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">Challenge <strong>Single-Qubit Gates</strong> passed successfully.</p>
+                    <time class="notif-time" datetime="2026-09-03">3 days ago</time>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="header-action" id="profileWrapper">
+            <button class="profile-btn" id="profileBtn" aria-label="User profile menu for Alex Johnson" aria-expanded="false" aria-haspopup="true">
+              <div class="avatar" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+              <div class="profile-info">
+                <span class="profile-name">Alex Johnson</span>
+                <span class="profile-role">Student</span>
+              </div>
+              <span class="chevron-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="popover profile-popover" id="profilePopover" role="dialog" aria-label="Profile menu" aria-hidden="true">
+              <div class="profile-popover-header">
+                <div class="avatar avatar-lg" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+                <div>
+                  <p class="profile-popover-name">Alex Johnson</p>
+                  <p class="profile-popover-email">alex.johnson@university.edu</p>
+                </div>
+              </div>
+              <ul class="profile-menu" role="list">
+                <li><a href="#profile" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  View Profile
+                </a></li>
+                <li><a href="#settings" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Settings
+                </a></li>
+              </ul>
+              <div class="profile-menu-divider" aria-hidden="true"></div>
+              <a href="#logout" class="profile-menu-item profile-logout">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== SIMULATION CONTENT ===== -->
+      <main class="sim-content" id="simContent" role="main">
+
+        <!-- ── Page Header ── -->
+        <div class="sim-page-header">
+          <nav class="sim-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span class="sim-breadcrumb-sep" aria-hidden="true">›</span>
+            <a href="circuit-builder.html">Practice</a>
+            <span class="sim-breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="sim-breadcrumb-current">Simulation Output</span>
+          </nav>
+          <div class="sim-header-row">
+            <div>
+              <h2 class="sim-heading">Simulation Output</h2>
+              <p class="sim-subtitle">Run your quantum circuit and explore the resulting quantum state.</p>
+            </div>
+            <div class="sim-status-badge" role="status" aria-live="polite">
+              <span class="sim-status-dot" aria-hidden="true"></span>
+              Simulation Complete
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Learning Flow Indicator ── -->
+        <div class="learning-flow" aria-label="Learning stage progress" role="navigation">
+          <span class="flow-step done" aria-label="Learn — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Learn
+          </span>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <span class="flow-step done" aria-label="Build — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Build
+          </span>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <span class="flow-step active" aria-label="Simulate — current stage" aria-current="step">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Simulate
+          </span>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <span class="flow-step" aria-label="Explain — upcoming">Explain</span>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <span class="flow-step" aria-label="Assess — upcoming">Assess</span>
+        </div>
+
+        <!-- ── Circuit Summary Card ── -->
+        <div class="circuit-summary-card" aria-labelledby="circuitSummaryHeading">
+          <div>
+            <div class="circuit-summary-label" id="circuitSummaryHeading">Circuit Simulated</div>
+            <pre class="circuit-ascii" id="circuitAscii" aria-label="ASCII representation of the simulated circuit">Loading…</pre>
+          </div>
+
+          <div class="circuit-meta-list">
+            <div class="circuit-meta-row">
+              <span class="circuit-meta-key">Qubits</span>
+              <span class="circuit-meta-val" id="metaQubits">—</span>
+            </div>
+            <div class="circuit-meta-row">
+              <span class="circuit-meta-key">Gates</span>
+              <span class="circuit-meta-val" id="metaGates">—</span>
+            </div>
+            <div class="circuit-meta-row">
+              <span class="circuit-meta-key">Depth</span>
+              <span class="circuit-meta-val" id="metaDepth">—</span>
+            </div>
+            <div class="circuit-meta-row">
+              <span class="circuit-meta-key">Shots</span>
+              <span class="circuit-meta-val" id="metaShots">—</span>
+            </div>
+          </div>
+
+          <div class="circuit-summary-actions">
+            <button class="btn btn-ghost btn-sm js-modify-circuit" aria-label="Go back to Circuit Builder">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Modify Circuit
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Two-Column Grid ── -->
+        <div class="sim-grid">
+
+          <!-- ═══ MEASUREMENT RESULTS ═══ -->
+          <div class="result-card" aria-labelledby="histogramHeading">
+            <div class="result-card-header">
+              <h3 class="result-card-title" id="histogramHeading">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/>
+                </svg>
+                Measurement Results
+              </h3>
+              <span class="result-card-meta">
+                <span id="histogramShotsVal">1024</span> shots
+              </span>
+            </div>
+            <div class="result-card-body">
+              <div class="histogram-container">
+                <div class="histogram-shots-label">
+                  Measurement outcomes across
+                  <span id="histogramShotsVal2">1024</span> shots
+                </div>
+                <div class="histogram-chart" id="histogramChart" role="img" aria-label="Measurement histogram">
+                  <!-- Dynamically rendered by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ BLOCH SPHERE ═══ -->
+          <div class="result-card" aria-labelledby="blochHeading">
+            <div class="result-card-header">
+              <h3 class="result-card-title" id="blochHeading">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                Bloch Sphere
+              </h3>
+              <span class="result-card-meta">q0 state</span>
+            </div>
+            <div class="result-card-body">
+              <div class="bloch-container">
+                <div class="bloch-sphere-wrap" role="img" aria-label="Bloch sphere showing the qubit state after applying the Hadamard gate. The state vector points toward the +X axis, representing the |+⟩ superposition state.">
+                  <svg id="blochSvg" class="bloch-svg" viewBox="0 0 230 230" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Rendered by JS -->
+                  </svg>
+                </div>
+                <p class="bloch-explanation">
+                  The Bloch sphere provides a geometric representation of a single-qubit state. After applying the Hadamard gate to |0⟩, the qubit moves to the |+⟩ state — sitting on the equator along the +X axis.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ STATE VECTOR ═══ -->
+          <div class="result-card" aria-labelledby="svHeading">
+            <div class="result-card-header">
+              <h3 class="result-card-title" id="svHeading">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="16" y1="12" x2="8" y2="12" stroke-dasharray="2,2"/>
+                </svg>
+                State Vector
+              </h3>
+            </div>
+            <div class="result-card-body">
+              <div class="statevector-equation" id="svEquation" aria-label="Quantum state equation">
+                |ψ⟩ = …
+              </div>
+
+              <table class="statevector-table" aria-label="State vector amplitudes">
+                <thead>
+                  <tr>
+                    <th scope="col">State</th>
+                    <th scope="col">Amplitude</th>
+                    <th scope="col">Probability</th>
+                  </tr>
+                </thead>
+                <tbody id="svTableBody">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+
+              <p class="sv-explanation">
+                The amplitudes describe the probability structure of the quantum state. Squaring the magnitude of each amplitude gives the measurement probability. Here, |0.707|² ≈ 0.5 — confirming equal 50/50 probability.
+              </p>
+            </div>
+          </div>
+
+          <!-- ═══ SIMULATION SUMMARY ═══ -->
+          <div class="result-card" aria-labelledby="summaryHeading">
+            <div class="result-card-header">
+              <h3 class="result-card-title" id="summaryHeading">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+                </svg>
+                Simulation Summary
+              </h3>
+            </div>
+            <div class="result-card-body">
+              <div class="sim-summary-grid">
+                <div class="sim-summary-row">
+                  <span class="sim-summary-key">Initial State</span>
+                  <span class="sim-summary-val"><code id="summaryInitialState">|0⟩</code></span>
+                </div>
+                <div class="sim-summary-row">
+                  <span class="sim-summary-key">Operation</span>
+                  <span class="sim-summary-val" id="summaryOperation">—</span>
+                </div>
+                <div class="sim-summary-row">
+                  <span class="sim-summary-key">Expected</span>
+                  <span class="sim-summary-val" id="summaryExpected">—</span>
+                </div>
+                <div class="sim-summary-row">
+                  <span class="sim-summary-key">Observed</span>
+                  <span class="sim-summary-val" id="summaryObserved">—</span>
+                </div>
+              </div>
+
+              <div class="result-verdict" role="status">
+                <div class="result-verdict-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                Expected behavior observed
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /sim-grid -->
+
+        <!-- ── AI Tutor Entry Point ── -->
+        <div class="ai-tutor-entry" role="complementary" aria-labelledby="aiTutorEntryHeading">
+          <div class="ai-tutor-icon-wrap" aria-hidden="true">🤖</div>
+          <div class="ai-tutor-body">
+            <h3 class="ai-tutor-entry-title" id="aiTutorEntryHeading">Want to understand this result?</h3>
+            <p class="ai-tutor-entry-desc">Ask the AI Tutor why this circuit produced these measurement results. The tutor will receive full context about your circuit, the simulation output, and the expected quantum behaviour.</p>
+          </div>
+          <div class="ai-tutor-action">
+            <button class="btn btn-indigo" id="explainResultBtn" aria-label="Open AI Tutor to explain this simulation result">
+              Explain This Result
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Bottom Actions ── -->
+        <div class="sim-bottom-actions">
+          <div class="sim-bottom-left">
+            <button class="btn btn-ghost js-modify-circuit" aria-label="Return to Circuit Builder">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Modify Circuit
+            </button>
+          </div>
+          <div class="sim-bottom-right">
+            <button class="btn btn-primary" id="runAgainBtn" aria-label="Run the simulation again">
+              Run Again
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <polyline points="23 4 23 10 17 10"/>
+                <path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="sim-footer" role="contentinfo">
+          <p>QuantumLeap-AI &copy; 2026 &mdash; AI-Powered Quantum Computing Education</p>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="cb-toast" id="simToast" role="status" aria-live="polite"></div>
+
+  <!-- Placeholder modal (for unbuilt routes) -->
+  <div class="route-placeholder" id="routePlaceholder" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="placeholderTitle">
+    <div class="placeholder-card">
+      <div class="placeholder-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3 id="placeholderTitle" class="placeholder-title">Coming Soon</h3>
+      <p class="placeholder-text">This section is part of the QuantumLeap-AI platform and will be available soon.</p>
+      <button class="btn btn-primary" id="placeholderClose" aria-label="Close and return">Back to Simulation</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/simulation-output.js"></script>
+</body>
+</html>

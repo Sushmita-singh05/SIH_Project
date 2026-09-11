@@ -1,0 +1,36 @@
+﻿# QuantumLeap-AI Curriculum: Lessons
+units:
+  - id: "unit_1"
+    title: "Unit 1: Quantum Foundations"
+    order: 1
+    description: "Fundamental principles of qubits, superposition, quantum gates, and measurements."
+    lessons:
+      - id: "lesson_superposition"
+        slug: "superposition"
+        title: "Superposition"
+        unit: "Unit 1: Quantum Foundations"
+        estimated_minutes: 15
+        difficulty: "Beginner"
+        learning_objectives:
+          - "Understand the difference between classical bits (0 or 1) and quantum qubits."
+          - "Represent a qubit in superposition state: |psi> = alpha|0> + beta|1>."
+          - "Learn how the Hadamard (H) gate transforms |0> into an equal superposition |+>."
+          - "Understand measurement probabilities (Born rule): P(0) = 50%, P(1) = 50%."
+        concepts:
+          - "Qubits & Basis States"
+          - "Superposition"
+          - "Hadamard Gate"
+          - "Quantum Measurement"
+        quiz:
+          question: "What is the probability of measuring |0> after applying a Hadamard gate to |0>?"
+          options:
+            - id: "A"
+              text: "0%"
+            - id: "B"
+              text: "25%"
+            - id: "C"
+              text: "50%"
+            - id: "D"
+              text: "100%"
+          correct_option: "C"
+          explanation: "The Hadamard gate creates an equal superposition: (|0> + |1>) / sqrt(2), giving exactly 50% probability for each outcome."

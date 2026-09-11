@@ -1,0 +1,851 @@
+/* =============================================
+   progress.css — Progress & Assessment Page
+   QuantumLeap-AI · Screen 7
+   ============================================= */
+
+/* ============ PAGE CONTENT ============ */
+.progress-content {
+  padding: var(--space-6) var(--space-8);
+  flex: 1;
+}
+
+/* ============ PAGE HEADER ============ */
+.progress-page-header {
+  margin-bottom: var(--space-6);
+}
+
+.progress-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.progress-breadcrumb a {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.progress-breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.progress-breadcrumb-sep {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.progress-breadcrumb-current {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.progress-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.progress-heading {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-1);
+}
+
+.progress-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.demo-subtle-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ============ LEARNING FLOW STRIP ============ */
+.learning-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-5);
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 4px var(--space-2);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.flow-step.active {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  font-weight: 700;
+}
+
+.flow-step.done {
+  color: var(--color-success);
+}
+
+.flow-step.done:hover {
+  text-decoration: underline;
+}
+
+.flow-sep {
+  color: var(--color-border);
+  margin: 0 var(--space-1);
+  font-size: 16px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ============ SECTION 1: OVERALL MASTERY ============ */
+.overall-mastery-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.mastery-left {
+  flex: 1;
+  min-width: 260px;
+}
+
+.mastery-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.mastery-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.mastery-large-val {
+  font-size: 54px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin-bottom: var(--space-2);
+}
+
+.mastery-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-3);
+  max-width: 480px;
+}
+
+.mastery-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: #059669;
+  background: var(--color-success-light);
+  border: 1px solid #A7F3D0;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+/* Circular Gauge */
+.mastery-gauge-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mastery-gauge-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.mastery-gauge-bg {
+  fill: none;
+  stroke: var(--color-bg);
+  stroke-width: 12;
+}
+
+.mastery-gauge-fill {
+  fill: none;
+  stroke: url(#masteryGrad);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mastery-gauge-center {
+  position: absolute;
+  text-align: center;
+}
+
+.mastery-gauge-pct {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.mastery-gauge-lbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+/* ============ SECTION 2: LEARNING METRICS ============ */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-card-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.metric-card-val {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.metric-card-sub {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ============ SECTION 3: PRE vs POST ASSESSMENT ============ */
+.pre-post-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.pre-post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pre-post-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pre-post-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+  line-height: 1.5;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.comparison-box {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.comparison-box.highlight {
+  background: #F0FDF4;
+  border-color: #A7F3D0;
+}
+
+.comparison-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.comparison-box.highlight .comparison-label {
+  color: #059669;
+}
+
+.comparison-score {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.1;
+}
+
+.comparison-box.highlight .comparison-score {
+  color: #059669;
+}
+
+.comparison-bar-track {
+  width: 100%;
+  height: 8px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.comparison-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.comparison-bar-fill.pre {
+  background: var(--color-text-muted);
+}
+
+.comparison-bar-fill.post {
+  background: var(--color-primary);
+}
+
+.comparison-bar-fill.gain {
+  background: var(--color-success);
+}
+
+.gain-banner {
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: #166534;
+}
+
+.gain-pill {
+  font-weight: 800;
+  font-size: var(--font-size-base);
+  background: #DCFCE7;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============ SECTION 4: CONCEPT MASTERY ============ */
+.concept-mastery-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.concept-mastery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.concept-mastery-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.concepts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.concept-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.concept-meta-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.concept-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.concept-status-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.concept-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.concept-status-badge.strong {
+  background: var(--color-success-light);
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.concept-status-badge.good {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1px solid #BFDBFE;
+}
+
+.concept-status-badge.developing {
+  background: var(--color-secondary-light);
+  color: var(--color-secondary);
+  border: 1px solid #C7D2FE;
+}
+
+.concept-status-badge.needspractice {
+  background: var(--color-warning-light);
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.concept-pct {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  min-width: 38px;
+  text-align: right;
+}
+
+.concept-track {
+  width: 100%;
+  height: 8px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--color-border-soft);
+}
+
+.concept-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.concept-fill.strong {
+  background: linear-gradient(90deg, #10B981 0%, #059669 100%);
+}
+
+.concept-fill.good {
+  background: linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%);
+}
+
+.concept-fill.developing {
+  background: linear-gradient(90deg, #4F46E5 0%, #4338CA 100%);
+}
+
+.concept-fill.needspractice {
+  background: linear-gradient(90deg, #F59E0B 0%, #D97706 100%);
+}
+
+/* ============ SECTION 5: STRENGTHS & WEAK AREAS ============ */
+.strengths-weak-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.sw-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.sw-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.sw-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.sw-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.sw-item-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sw-item-num.strength {
+  background: var(--color-success-light);
+  color: #059669;
+}
+
+.sw-item-num.weak {
+  background: var(--color-warning-light);
+  color: #B45309;
+}
+
+/* ============ SECTION 6: RECENT LEARNING ACTIVITY ============ */
+.activity-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.activity-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  gap: var(--space-3);
+}
+
+.timeline-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.timeline-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-success);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.timeline-circle-ready {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  background: white;
+  flex-shrink: 0;
+}
+
+.timeline-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.timeline-status {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.timeline-status.completed {
+  color: #059669;
+}
+
+.timeline-status.ready {
+  color: var(--color-primary);
+}
+
+/* ============ SECTION 7: ASSESSMENT SUMMARY ============ */
+.assess-summary-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.assess-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.assess-summary-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.summary-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.summary-metric-pill {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-metric-key {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.summary-metric-val {
+  font-size: var(--font-size-base);
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.summary-feedback-box {
+  background: var(--color-bg);
+  border-left: 3.5px solid var(--color-primary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+
+.summary-actions-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* ============ FOOTER ============ */
+.progress-footer {
+  padding: var(--space-6) var(--space-8);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .strengths-weak-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-content {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .progress-heading {
+    font-size: var(--font-size-xl);
+  }
+
+  .overall-mastery-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mastery-gauge-wrap {
+    align-self: center;
+  }
+
+  .summary-actions-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-content {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .learning-flow {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .metrics-row {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

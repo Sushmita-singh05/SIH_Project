@@ -1,0 +1,559 @@
+/* =============================================
+   dashboard.css — Dashboard content area
+   QuantumLeap-AI Dashboard
+   ============================================= */
+
+/* ---- Dashboard Content Container ---- */
+.dashboard-content {
+  flex: 1;
+  padding: var(--space-6) var(--space-8);
+  max-width: 1280px;
+  width: 100%;
+}
+
+/* ============================================
+   WELCOME SECTION
+   ============================================ */
+.welcome-section {
+  margin-bottom: var(--space-6);
+}
+
+.welcome-heading {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: var(--space-2);
+}
+
+.welcome-subtext {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+/* ============================================
+   PROGRESS OVERVIEW
+   ============================================ */
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.progress-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--transition-base);
+  cursor: default;
+}
+
+.progress-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #CBD5E1;
+  transform: translateY(-2px);
+}
+
+.progress-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.progress-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.progress-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.lessons-icon {
+  background: #EEF4FF;
+  color: var(--color-primary);
+}
+
+.challenges-icon {
+  background: var(--color-secondary-light);
+  color: var(--color-secondary);
+}
+
+.mastery-icon {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.progress-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.progress-card-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.progress-card-value {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.progress-total {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.progress-pct {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.progress-bar-wrap {
+  height: 6px;
+  background: var(--color-border-soft);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  animation: progressFill 800ms ease-out;
+}
+
+.lessons-bar    { background: linear-gradient(90deg, #3B82F6, #2563EB); }
+.challenges-bar { background: linear-gradient(90deg, #7C3AED, #4F46E5); }
+.mastery-bar    { background: linear-gradient(90deg, #34D399, #10B981); }
+
+.progress-card-sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* ============================================
+   MAIN ACTIONS GRID
+   ============================================ */
+.main-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-5);
+  align-items: stretch; /* both columns grow to same height */
+}
+
+/* Ensure child sections fill the column height */
+.main-actions-grid > .section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.main-actions-grid > .section > article {
+  flex: 1;
+}
+
+/* ============================================
+   RECOMMENDED LESSON CARD
+   ============================================ */
+.lesson-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.lesson-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.lesson-card-content {
+  display: flex;
+  align-items: stretch;
+  min-height: 220px;
+  height: 100%;
+}
+
+.lesson-card-body {
+  flex: 1;
+  padding: var(--space-6) var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.lesson-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  align-self: flex-start;
+}
+
+.lesson-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.lesson-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  max-width: 440px;
+}
+
+.lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.lesson-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.lesson-card-body .btn {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+/* ---- Lesson Visual Panel ---- */
+.lesson-card-visual {
+  width: 200px;
+  background: linear-gradient(135deg, #F0F4FF 0%, #EEF2FF 100%);
+  border-left: 1px solid var(--color-border-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  flex-shrink: 0;
+}
+
+/* Circuit diagram */
+.circuit-diagram {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-xs);
+}
+
+.circuit-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  white-space: nowrap;
+}
+
+.circuit-line {
+  width: 20px;
+  height: 1.5px;
+  background: #94A3B8;
+}
+
+.circuit-gate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: white;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-primary);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.circuit-output {
+  display: flex;
+  align-items: center;
+}
+
+.circuit-state {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  white-space: nowrap;
+}
+
+.circuit-caption {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-align: center;
+  margin-top: -var(--space-2);
+}
+
+.bloch-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ============================================
+   QUICK CHALLENGE CARD
+   ============================================ */
+.challenge-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: box-shadow var(--transition-base);
+  /* height is naturally stretched by the grid's align-items: stretch */
+}
+
+.challenge-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.challenge-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--color-secondary-light);
+  border-radius: var(--radius-lg);
+  color: var(--color-secondary);
+}
+
+.difficulty-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  align-self: flex-start;
+}
+
+.badge-intermediate {
+  background: #FFFBEB;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.badge-beginner {
+  background: var(--color-success-light);
+  color: #065F46;
+  border: 1px solid #6EE7B7;
+}
+
+.badge-advanced {
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+}
+
+.challenge-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.challenge-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+.challenge-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+}
+
+.challenge-card .btn {
+  margin-top: auto;
+}
+
+/* ============================================
+   LEARNING JOURNEY
+   ============================================ */
+.journey-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xs);
+}
+
+.journey-section .section-title {
+  margin-bottom: var(--space-5);
+}
+
+.journey-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+/* ---- Journey Stage ---- */
+.journey-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 90px;
+  text-align: center;
+}
+
+.journey-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+/* Stage colors — default (upcoming) */
+.learn-stage    { background: var(--color-primary-light); color: var(--color-primary); }
+.build-stage    { background: var(--color-secondary-light); color: var(--color-secondary); }
+.simulate-stage { background: var(--color-success-light); color: var(--color-success); }
+.explain-stage  { background: var(--color-warning-light); color: var(--color-warning); }
+.assess-stage   { background: #FEF2F2; color: var(--color-danger); }
+
+/* Upcoming stages are muted */
+.journey-stage:not(.active-stage) .journey-icon-wrap {
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* Active stage */
+.active-stage .journey-icon-wrap {
+  box-shadow: 0 0 0 4px var(--color-primary-ring);
+}
+
+.journey-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.journey-stage:not(.active-stage) .journey-label {
+  color: var(--color-text-muted);
+}
+
+.journey-status {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.journey-status.upcoming {
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+}
+
+/* ---- Connector ---- */
+.journey-connector {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  min-width: 30px;
+  max-width: 70px;
+  color: var(--color-border);
+  margin-bottom: 32px; /* align with icon center */
+}
+
+.connector-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* ============================================
+   DASHBOARD FOOTER
+   ============================================ */
+.dashboard-footer {
+  padding: var(--space-6) 0 var(--space-4);
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.dashboard-footer p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}

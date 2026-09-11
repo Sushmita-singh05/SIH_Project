@@ -1,0 +1,145 @@
+/* =============================================
+   sidebar.css — Fixed left navigation sidebar
+   QuantumLeap-AI Dashboard
+   ============================================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform var(--transition-slow);
+  overflow: hidden;
+}
+
+/* ---- Logo ---- */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5);
+  border-bottom: 1px solid var(--color-border-soft);
+  min-height: var(--header-height);
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.sidebar-logo:hover .logo-mark {
+  transform: rotate(8deg) scale(1.05);
+}
+
+.logo-text {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.logo-accent {
+  color: var(--color-primary);
+}
+
+/* ---- Primary Nav ---- */
+.sidebar-nav {
+  flex: 1;
+  padding: var(--space-4) var(--space-3);
+  overflow-y: auto;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.nav-link:hover .nav-icon {
+  color: var(--color-primary);
+}
+
+/* Active state */
+.nav-link.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.nav-link.active .nav-icon {
+  color: var(--color-primary);
+}
+
+/* Active left indicator */
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.nav-label {
+  flex: 1;
+}
+
+/* ---- Bottom Nav ---- */
+.sidebar-bottom {
+  border-top: 1px solid var(--color-border-soft);
+  padding: var(--space-3) var(--space-3);
+  flex-shrink: 0;
+}
+
+.sidebar-bottom .nav-list {
+  gap: 2px;
+}

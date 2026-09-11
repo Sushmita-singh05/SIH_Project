@@ -1,0 +1,46 @@
+﻿# QuantumLeap-AI Curriculum: Challenges
+challenges:
+  - id: "ch_bell_state"
+    slug: "bell-state"
+    title: "Build a Bell State"
+    unit: "Unit 1: Quantum Foundations"
+    difficulty: "Intermediate"
+    estimated_minutes: 5
+    qubits: 2
+    prompt: "Create an entangled two-qubit Bell State by applying a Hadamard gate to q0 followed by a CNOT gate with q0 as the control and q1 as the target."
+    target_circuit:
+      - gate: "H"
+        qubit: 0
+        step: 0
+      - gate: "CNOT"
+        control: 0
+        target: 1
+        step: 1
+    expected_measurements:
+      "00": 0.5
+      "01": 0.0
+      "10": 0.0
+      "11": 0.5
+    hints:
+      - level: 1
+        tag: "Superposition"
+        text: "Which gate creates a superposition from |0>?"
+      - level: 2
+        tag: "Sequence"
+        text: "Apply H to q0 first, then use q0 as the control for a CNOT."
+      - level: 3
+        tag: "Solution"
+        text: "The Bell State circuit is H on q0 followed by CNOT(q0,q1)."
+    assessment_quiz:
+      question: "Why does the Bell State produce correlated measurements?"
+      options:
+        - id: "A"
+          text: "The qubits are completely independent."
+        - id: "B"
+          text: "The CNOT creates entanglement between the qubits."
+        - id: "C"
+          text: "The X gate removes superposition."
+        - id: "D"
+          text: "Measurement always produces |00>."
+      correct_option: "B"
+      explanation: "The CNOT creates quantum entanglement between the qubits when the control qubit is in superposition."

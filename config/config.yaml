@@ -1,0 +1,38 @@
+﻿# QuantumLeap-AI System Configuration
+
+app:
+  name: "QuantumLeap-AI"
+  version: "0.1.0-prototype"
+  env: "development"
+  debug: true
+
+server:
+  host: "127.0.0.1"
+  port: 8000
+  cors_origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
+
+quantum:
+  default_backend: "aer_simulator"
+  default_shots: 1024
+  max_qubits: 5
+  max_depth: 8
+  supported_gates:
+    - "H"
+    - "X"
+    - "Y"
+    - "Z"
+    - "CNOT"
+
+ai_tutor:
+  model: "gemini-1.5-pro"
+  temperature: 0.2
+  max_hint_level: 3
+  grounding:
+    require_circuit_context: true
+    require_simulation_shots: true
+
+curriculum:
+  lessons_path: "curriculum/lessons.yaml"
+  challenges_path: "curriculum/challenges.yaml"

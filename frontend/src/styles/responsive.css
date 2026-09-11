@@ -1,0 +1,199 @@
+/* =============================================
+   responsive.css — Breakpoints & responsive layout
+   QuantumLeap-AI Dashboard
+   ============================================= */
+
+/* ============================================
+   TABLET (≤ 1024px)
+   ============================================ */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .dashboard-content {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .main-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-card {
+    height: auto;
+  }
+
+  .lesson-card-visual {
+    width: 160px;
+  }
+
+  .progress-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* ============================================
+   COLLAPSIBLE SIDEBAR (≤ 900px)
+   ============================================ */
+@media (max-width: 900px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 200;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-area {
+    margin-left: 0;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Sidebar overlay */
+  .sidebar-overlay {
+    display: none;
+  }
+
+  .sidebar-overlay.visible {
+    display: block;
+  }
+
+  /* Progress grid → 1 or 2 cols on tablet */
+  .progress-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================
+   MOBILE (≤ 640px)
+   ============================================ */
+@media (max-width: 640px) {
+  .dashboard-content {
+    padding: var(--space-4) var(--space-4);
+  }
+
+
+  .welcome-heading {
+    font-size: var(--font-size-xl);
+  }
+
+  .welcome-subtext {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Progress cards → 1 col on mobile */
+  .progress-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  /* Main actions → 1 col */
+  .main-actions-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Lesson card */
+  .lesson-card-content {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .lesson-card-body {
+    padding: var(--space-5);
+    order: 2;
+  }
+
+  .lesson-card-visual {
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid var(--color-border-soft);
+    flex-direction: row;
+    justify-content: space-around;
+    padding: var(--space-4);
+    order: 1;
+  }
+
+  .lesson-card-body .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .challenge-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Journey — allow horizontal scroll on small screens */
+  .journey-container {
+    justify-content: flex-start;
+    padding-left: var(--space-1);
+    padding-right: var(--space-1);
+  }
+
+  .journey-connector {
+    min-width: 20px;
+    max-width: 40px;
+  }
+
+  .journey-stage {
+    min-width: 72px;
+  }
+
+  .journey-icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Header */
+  .top-header {
+    padding: 0 var(--space-4);
+  }
+
+  .profile-info {
+    display: none;
+  }
+
+  .page-title {
+    font-size: var(--font-size-md);
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: var(--font-size-md);
+  }
+
+  /* Lesson meta */
+  .lesson-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  /* Challenge title */
+  .challenge-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* ============================================
+   SMALL MOBILE (≤ 380px)
+   ============================================ */
+@media (max-width: 380px) {
+  .progress-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-card-visual {
+    flex-direction: column;
+  }
+
+  .journey-status {
+    display: none;
+  }
+}

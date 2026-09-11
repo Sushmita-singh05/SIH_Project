@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circuit Builder — Practice | QuantumLeap-AI</title>
+  <meta name="description" content="Build and experiment with quantum circuits interactively. Place gates, adjust qubits, and prepare circuits for simulation on QuantumLeap-AI." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/header.css" />
+
+  <!-- Page-specific Styles -->
+  <link rel="stylesheet" href="css/circuit-builder.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ===== SIDEBAR (Practice is active) ===== -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <a href="index.html" class="sidebar-logo-link" aria-label="QuantumLeap-AI — go to Dashboard">
+          <div class="logo-mark" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#2563EB" stroke-width="1.5" fill="none" transform="rotate(-30 16 16)" opacity="0.6"/>
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#4F46E5" stroke-width="1.5" fill="none" transform="rotate(30 16 16)" opacity="0.4"/>
+              <circle cx="16" cy="16" r="3.5" fill="#2563EB"/>
+              <circle cx="5" cy="11" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="27" cy="21" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="26" cy="10" r="1" fill="#2563EB" opacity="0.5"/>
+            </svg>
+          </div>
+          <span class="logo-text">QuantumLeap<span class="logo-accent">-AI</span></span>
+        </a>
+      </div>
+
+      <!-- Primary Nav -->
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link" data-route="dashboard" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lesson-superposition.html" class="nav-link" data-route="learn" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Learn</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="circuit-builder.html" class="nav-link active" data-route="practice" aria-current="page" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <span class="nav-label">Practice</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="progress.html" class="nav-link" data-route="progress" tabindex="0" aria-label="Progress">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </span>
+              <span class="nav-label">Progress</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Bottom Nav -->
+      <div class="sidebar-bottom">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="#settings" class="nav-link" data-route="settings" tabindex="0" aria-label="Settings">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#help" class="nav-link" data-route="help" tabindex="0" aria-label="Help &amp; Documentation">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </span>
+              <span class="nav-label">Help</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN AREA ===== -->
+    <div class="main-area">
+
+      <!-- TOP HEADER -->
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <h1 class="page-title">Practice</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="header-action" id="notifWrapper">
+            <button class="icon-btn" id="notifBtn" aria-label="Notifications — 2 unread" aria-expanded="false" aria-haspopup="true">
+              <span aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+              </span>
+              <span class="notif-badge" aria-label="2 unread notifications">2</span>
+            </button>
+            <div class="popover notif-popover" id="notifPopover" role="dialog" aria-label="Notifications" aria-hidden="true">
+              <div class="popover-header">
+                <span class="popover-title">Notifications</span>
+                <button class="popover-close" id="notifClose" aria-label="Close notifications">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <ul class="notif-list" role="list">
+                <li class="notif-item unread">
+                  <div class="notif-dot" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">New lesson <strong>Quantum Entanglement</strong> is now available.</p>
+                    <time class="notif-time" datetime="2026-09-05">Yesterday</time>
+                  </div>
+                </li>
+                <li class="notif-item unread">
+                  <div class="notif-dot" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">You're 38% away from completing <strong>Unit 1</strong>.</p>
+                    <time class="notif-time" datetime="2026-09-04">2 days ago</time>
+                  </div>
+                </li>
+                <li class="notif-item">
+                  <div class="notif-dot read" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">Challenge <strong>Single-Qubit Gates</strong> passed successfully.</p>
+                    <time class="notif-time" datetime="2026-09-03">3 days ago</time>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="header-action" id="profileWrapper">
+            <button class="profile-btn" id="profileBtn" aria-label="User profile menu for Alex Johnson" aria-expanded="false" aria-haspopup="true">
+              <div class="avatar" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+              <div class="profile-info">
+                <span class="profile-name">Alex Johnson</span>
+                <span class="profile-role">Student</span>
+              </div>
+              <span class="chevron-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="popover profile-popover" id="profilePopover" role="dialog" aria-label="Profile menu" aria-hidden="true">
+              <div class="profile-popover-header">
+                <div class="avatar avatar-lg" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+                <div>
+                  <p class="profile-popover-name">Alex Johnson</p>
+                  <p class="profile-popover-email">alex.johnson@university.edu</p>
+                </div>
+              </div>
+              <ul class="profile-menu" role="list">
+                <li><a href="#profile" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  View Profile
+                </a></li>
+                <li><a href="#settings" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Settings
+                </a></li>
+              </ul>
+              <div class="profile-menu-divider" aria-hidden="true"></div>
+              <a href="#logout" class="profile-menu-item profile-logout">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== CIRCUIT BUILDER CONTENT ===== -->
+      <main class="circuit-builder-content" id="circuitBuilderContent" role="main">
+
+        <!-- Page Header -->
+        <div class="cb-page-header">
+          <nav class="cb-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span class="cb-breadcrumb-sep" aria-hidden="true">›</span>
+            <span>Practice</span>
+            <span class="cb-breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="cb-breadcrumb-current">Circuit Builder</span>
+          </nav>
+          <h2 class="cb-heading">Circuit Builder</h2>
+          <p class="cb-subtitle">Build and experiment with quantum circuits.</p>
+        </div>
+
+        <!-- Instruction Card -->
+        <div class="instruction-card" id="instructionCard" role="region" aria-label="Learning task">
+          <div class="instruction-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <div class="instruction-body">
+            <span class="instruction-label">Try it yourself</span>
+            <p class="instruction-title">Apply a Hadamard (H) gate to q0.</p>
+            <p class="instruction-desc">The Hadamard gate creates a superposition, allowing the qubit to have equal probability of being measured as |0⟩ or |1⟩.</p>
+            <span class="instruction-goal" aria-label="Goal: apply H gate to qubit 0">
+              <strong>Goal:</strong>&nbsp; q0 → H
+            </span>
+          </div>
+        </div>
+
+        <!-- Three-column workspace -->
+        <div class="cb-workspace">
+
+          <!-- ===== LEFT — GATE PALETTE ===== -->
+          <div class="gate-palette" id="gatePalette" aria-label="Gate palette">
+            <div class="palette-header">
+              <h3 class="palette-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Gate Palette
+              </h3>
+            </div>
+            <div class="palette-body">
+
+              <!-- Single Qubit Gates -->
+              <div class="gate-category">
+                <div class="gate-category-label">Single Qubit Gates</div>
+                <div class="gate-grid">
+                  <button class="gate-tile" data-gate="H" title="Hadamard — Creates superposition" aria-label="Hadamard gate" id="gateH">
+                    <span class="gate-tile-name">H</span>
+                    <span class="gate-tile-desc">Hadamard</span>
+                  </button>
+                  <button class="gate-tile" data-gate="X" title="Bit flip — Pauli-X gate" aria-label="X gate" id="gateX">
+                    <span class="gate-tile-name">X</span>
+                    <span class="gate-tile-desc">Bit flip</span>
+                  </button>
+                  <button class="gate-tile" data-gate="Y" title="Y rotation — Pauli-Y gate" aria-label="Y gate" id="gateY">
+                    <span class="gate-tile-name">Y</span>
+                    <span class="gate-tile-desc">Y rotation</span>
+                  </button>
+                  <button class="gate-tile" data-gate="Z" title="Phase flip — Pauli-Z gate" aria-label="Z gate" id="gateZ">
+                    <span class="gate-tile-name">Z</span>
+                    <span class="gate-tile-desc">Phase flip</span>
+                  </button>
+                  <button class="gate-tile" data-gate="S" title="Phase gate — S gate" aria-label="S gate" id="gateS">
+                    <span class="gate-tile-name">S</span>
+                    <span class="gate-tile-desc">Phase gate</span>
+                  </button>
+                  <button class="gate-tile" data-gate="T" title="T gate" aria-label="T gate" id="gateT">
+                    <span class="gate-tile-name">T</span>
+                    <span class="gate-tile-desc">T gate</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Multi-Qubit Gates -->
+              <div class="gate-category">
+                <div class="gate-category-label">Multi-Qubit Gates</div>
+                <div class="gate-grid gate-grid-wide">
+                  <button class="gate-tile" data-gate="CNOT" title="Controlled-X — CNOT gate" aria-label="CNOT gate" id="gateCNOT">
+                    <span class="gate-tile-name">CNOT</span>
+                    <span class="gate-tile-desc">Controlled-X</span>
+                  </button>
+                  <button class="gate-tile" data-gate="CZ" title="Controlled-Z gate" aria-label="CZ gate" id="gateCZ">
+                    <span class="gate-tile-name">CZ</span>
+                    <span class="gate-tile-desc">Controlled-Z</span>
+                  </button>
+                  <button class="gate-tile" data-gate="SWAP" title="Swap two qubits" aria-label="SWAP gate" id="gateSWAP">
+                    <span class="gate-tile-name">SWAP</span>
+                    <span class="gate-tile-desc">Swap qubits</span>
+                  </button>
+                  <button class="gate-tile" data-gate="Toffoli" title="Controlled-controlled-X — Toffoli gate" aria-label="Toffoli gate" id="gateToffoli">
+                    <span class="gate-tile-name">Toffoli</span>
+                    <span class="gate-tile-desc">CC-X</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Operations -->
+              <div class="gate-category">
+                <div class="gate-category-label">Operations</div>
+                <div class="ops-grid">
+                  <button class="op-btn" id="measureBtn" title="Measure a qubit" aria-label="Measure operation">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <path d="M7 17 Q12 8 17 17" stroke-width="1.5"/>
+                      <line x1="12" y1="17" x2="15" y2="11" stroke-width="1.5"/>
+                    </svg>
+                    Measure
+                  </button>
+                  <button class="op-btn" id="resetBtn" title="Reset the circuit" aria-label="Reset circuit">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polyline points="1 4 1 10 7 10"/>
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    Reset
+                  </button>
+                  <button class="op-btn op-btn-danger" id="clearPaletteBtn" title="Clear all gates from the circuit" aria-label="Clear circuit">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polyline points="3 6 5 6 21 6"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ===== CENTER — CIRCUIT CANVAS ===== -->
+          <div class="circuit-canvas-panel" id="circuitCanvasPanel">
+
+            <!-- Toolbar -->
+            <div class="canvas-toolbar">
+              <div class="canvas-toolbar-left">
+                <!-- Qubit Selector -->
+                <div class="qubit-selector" role="group" aria-label="Number of qubits">
+                  <button class="qubit-btn" data-qubits="1" aria-label="1 Qubit">1 Qubit</button>
+                  <button class="qubit-btn active" data-qubits="2" aria-label="2 Qubits">2 Qubits</button>
+                  <button class="qubit-btn" data-qubits="3" aria-label="3 Qubits">3 Qubits</button>
+                  <button class="qubit-btn" data-qubits="4" aria-label="4 Qubits">4 Qubits</button>
+                  <button class="qubit-btn" data-qubits="5" aria-label="5 Qubits">5 Qubits</button>
+                </div>
+              </div>
+              <div class="canvas-toolbar-right">
+                <button class="toolbar-btn" id="undoBtn" disabled aria-label="Undo" title="Undo (Ctrl+Z)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                  Undo
+                </button>
+                <button class="toolbar-btn" id="redoBtn" disabled aria-label="Redo" title="Redo (Ctrl+Y)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10"/></svg>
+                  Redo
+                </button>
+                <button class="toolbar-btn" id="clearCircuitBtn" aria-label="Clear circuit" title="Clear all gates">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <!-- Circuit Grid -->
+            <div class="circuit-grid-wrap">
+              <!-- Step Headers -->
+              <div class="circuit-step-headers" id="stepHeaders"></div>
+              <!-- Qubit Rows -->
+              <div class="circuit-grid" id="circuitGrid" role="grid" aria-label="Quantum circuit canvas">
+                <!-- Dynamically rendered by JS -->
+              </div>
+            </div>
+
+            <!-- Bottom Actions -->
+            <div class="canvas-actions">
+              <div class="canvas-actions-left">
+                <button class="btn btn-secondary btn-sm" id="viewJsonBtn" aria-label="View circuit data as JSON">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  View Circuit Data
+                </button>
+              </div>
+              <div class="canvas-actions-right">
+                <button class="btn btn-primary" id="runSimBtn" aria-label="Run simulation">
+                  Run Simulation
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ===== RIGHT — CIRCUIT INFORMATION ===== -->
+          <div class="circuit-info-panel">
+
+            <!-- Circuit Summary -->
+            <div class="info-card" aria-labelledby="summaryHeading">
+              <div class="info-card-header">
+                <h3 class="info-card-title" id="summaryHeading">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+                  </svg>
+                  Circuit Summary
+                </h3>
+              </div>
+              <div class="info-card-body">
+                <div class="summary-stats">
+                  <div class="summary-stat">
+                    <span class="stat-label">Qubits</span>
+                    <span class="stat-value" id="statQubits">2</span>
+                  </div>
+                  <div class="summary-stat">
+                    <span class="stat-label">Gates</span>
+                    <span class="stat-value" id="statGates">0</span>
+                  </div>
+                  <div class="summary-stat">
+                    <span class="stat-label">Depth</span>
+                    <span class="stat-value" id="statDepth">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Current Task -->
+            <div class="info-card" aria-labelledby="taskHeading">
+              <div class="info-card-header">
+                <h3 class="info-card-title" id="taskHeading">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                  Current Task
+                </h3>
+              </div>
+              <div class="task-card-body">
+                <p class="task-description">Build a superposition circuit using the Hadamard gate.</p>
+                <div class="task-progress">
+                  <span class="task-progress-label">Progress</span>
+                  <span class="task-progress-value">1 / 1</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Tutor Tip -->
+            <div class="info-card ai-tip-card" aria-labelledby="aiTipHeading" role="complementary">
+              <div class="info-card-header">
+                <h3 class="info-card-title" id="aiTipHeading">
+                  <span class="ai-tip-icon" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <rect x="3" y="11" width="18" height="11" rx="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
+                    </svg>
+                  </span>
+                  AI Tutor Tip
+                </h3>
+              </div>
+              <div class="info-card-body">
+                <blockquote class="ai-tip-message">
+                  "Start by placing an H gate on q0. Remember: the Hadamard gate is commonly used to create an equal superposition."
+                </blockquote>
+              </div>
+            </div>
+
+          </div>
+
+        </div><!-- /cb-workspace -->
+
+        <!-- Footer -->
+        <footer class="cb-footer" role="contentinfo">
+          <p>QuantumLeap-AI &copy; 2026 &mdash; AI-Powered Quantum Computing Education</p>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ===== JSON Modal ===== -->
+  <div class="cb-modal-overlay" id="jsonModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="jsonModalTitle">
+    <div class="cb-modal">
+      <div class="cb-modal-header">
+        <h3 class="cb-modal-title" id="jsonModalTitle">Circuit Data (JSON)</h3>
+        <button class="cb-modal-close" id="jsonModalClose" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="cb-modal-body">
+        <pre class="circuit-json-pre" id="jsonPre">{ "qubits": 2, "operations": [] }</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="cb-toast" id="cbToast" role="status" aria-live="polite"></div>
+
+  <!-- Placeholder overlay (for unbuilt routes) -->
+  <div class="route-placeholder" id="routePlaceholder" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="placeholderTitle">
+    <div class="placeholder-card">
+      <div class="placeholder-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3 id="placeholderTitle" class="placeholder-title">Coming Soon</h3>
+      <p class="placeholder-text">This section is part of the QuantumLeap-AI platform and will be available soon.</p>
+      <button class="btn btn-primary" id="placeholderClose" aria-label="Close and return">Back to Circuit Builder</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/circuit-builder.js"></script>
+</body>
+</html>

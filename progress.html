@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress &amp; Assessment — QuantumLeap-AI</title>
+  <meta name="description" content="Track your learning progress, quantum concept mastery, and pre/post assessment improvement on QuantumLeap-AI." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/header.css" />
+
+  <!-- Page-specific Styles -->
+  <link rel="stylesheet" href="css/progress.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ===== SIDEBAR (Progress is active) ===== -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <a href="index.html" class="sidebar-logo-link" aria-label="QuantumLeap-AI — go to Dashboard">
+          <div class="logo-mark" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#2563EB" stroke-width="1.5" fill="none" transform="rotate(-30 16 16)" opacity="0.6"/>
+              <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#4F46E5" stroke-width="1.5" fill="none" transform="rotate(30 16 16)" opacity="0.4"/>
+              <circle cx="16" cy="16" r="3.5" fill="#2563EB"/>
+              <circle cx="5" cy="11" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="27" cy="21" r="1.5" fill="#4F46E5" opacity="0.7"/>
+              <circle cx="26" cy="10" r="1" fill="#2563EB" opacity="0.5"/>
+            </svg>
+          </div>
+          <span class="logo-text">QuantumLeap<span class="logo-accent">-AI</span></span>
+        </a>
+      </div>
+
+      <!-- Primary Nav -->
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link" data-route="dashboard" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lesson-superposition.html" class="nav-link" data-route="learn" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Learn</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="challenge.html" class="nav-link" data-route="practice" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <span class="nav-label">Practice</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="progress.html" class="nav-link active" data-route="progress" aria-current="page" tabindex="0">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </span>
+              <span class="nav-label">Progress</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Bottom Nav -->
+      <div class="sidebar-bottom">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="#settings" class="nav-link" data-route="settings" tabindex="0" aria-label="Settings">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#help" class="nav-link" data-route="help" tabindex="0" aria-label="Help &amp; Documentation">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </span>
+              <span class="nav-label">Help</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN AREA ===== -->
+    <div class="main-area">
+
+      <!-- TOP HEADER -->
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <h1 class="page-title">Progress &amp; Assessment</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="header-action" id="notifWrapper">
+            <button class="icon-btn" id="notifBtn" aria-label="Notifications — 2 unread" aria-expanded="false" aria-haspopup="true">
+              <span aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+              </span>
+              <span class="notif-badge" aria-label="2 unread notifications">2</span>
+            </button>
+            <div class="popover notif-popover" id="notifPopover" role="dialog" aria-label="Notifications" aria-hidden="true">
+              <div class="popover-header">
+                <span class="popover-title">Notifications</span>
+                <button class="popover-close" id="notifClose" aria-label="Close notifications">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <ul class="notif-list" role="list">
+                <li class="notif-item unread">
+                  <div class="notif-dot" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">Unit 1 Assessment is ready to review.</p>
+                    <time class="notif-time" datetime="2026-09-06">Just now</time>
+                  </div>
+                </li>
+                <li class="notif-item">
+                  <div class="notif-dot read" aria-hidden="true"></div>
+                  <div class="notif-content">
+                    <p class="notif-text">Challenge <strong>Build a Bell State</strong> passed.</p>
+                    <time class="notif-time" datetime="2026-09-06">Today</time>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="header-action" id="profileWrapper">
+            <button class="profile-btn" id="profileBtn" aria-label="User profile menu for Alex Johnson" aria-expanded="false" aria-haspopup="true">
+              <div class="avatar" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+              <div class="profile-info">
+                <span class="profile-name">Alex Johnson</span>
+                <span class="profile-role">Student</span>
+              </div>
+              <span class="chevron-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="popover profile-popover" id="profilePopover" role="dialog" aria-label="Profile menu" aria-hidden="true">
+              <div class="profile-popover-header">
+                <div class="avatar avatar-lg" aria-hidden="true"><span class="avatar-initials">AJ</span></div>
+                <div>
+                  <p class="profile-popover-name">Alex Johnson</p>
+                  <p class="profile-popover-email">alex.johnson@university.edu</p>
+                </div>
+              </div>
+              <ul class="profile-menu" role="list">
+                <li><a href="#profile" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  View Profile
+                </a></li>
+                <li><a href="#settings" class="profile-menu-item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Settings
+                </a></li>
+              </ul>
+              <div class="profile-menu-divider" aria-hidden="true"></div>
+              <a href="#logout" class="profile-menu-item profile-logout">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== MAIN PROGRESS CONTENT ===== -->
+      <main class="progress-content" id="progressContent" role="main">
+
+        <!-- ── Page Header ── -->
+        <div class="progress-page-header">
+          <nav class="progress-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span class="progress-breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="progress-breadcrumb-current">Progress &amp; Assessment</span>
+          </nav>
+          <div class="progress-header-row">
+            <div>
+              <h2 class="progress-heading">Progress &amp; Assessment</h2>
+              <p class="progress-subtitle">Track your learning progress, mastery, and improvement.</p>
+            </div>
+            <span class="demo-subtle-tag">Demo Data</span>
+          </div>
+        </div>
+
+        <!-- ── Learning Journey Progress Strip (Highlight: ASSESS) ── -->
+        <div class="learning-flow" aria-label="Learning stage progress" role="navigation">
+          <a href="lesson-superposition.html" class="flow-step done" aria-label="Learn — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            LEARN
+          </a>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <a href="circuit-builder.html" class="flow-step done" aria-label="Build — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            BUILD
+          </a>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <a href="simulation-output.html" class="flow-step done" aria-label="Simulate — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            SIMULATE
+          </a>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <a href="ai-tutor.html" class="flow-step done" aria-label="Explain — completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            EXPLAIN
+          </a>
+          <span class="flow-sep" aria-hidden="true">→</span>
+          <span class="flow-step active" aria-label="Assess — current stage" aria-current="step">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ASSESS
+          </span>
+        </div>
+
+        <!-- ── SECTION 1: OVERALL MASTERY CARD ── -->
+        <div class="overall-mastery-card" role="region" aria-labelledby="overallMasteryHeading">
+          <div class="mastery-left">
+            <div class="mastery-title-row">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+              <h3 class="mastery-card-title" id="overallMasteryHeading">Overall Mastery</h3>
+            </div>
+            <div class="mastery-large-val" id="overallMasteryVal">72%</div>
+            <p class="mastery-subtitle">Your current understanding across quantum computing concepts.</p>
+            <div class="mastery-trend">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              Improving steadily
+            </div>
+          </div>
+
+          <!-- Radial Gauge Visualization -->
+          <div class="mastery-gauge-wrap" aria-label="72% overall mastery progress">
+            <svg class="mastery-gauge-svg" viewBox="0 0 128 128">
+              <defs>
+                <linearGradient id="masteryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2563EB" />
+                  <stop offset="100%" stop-color="#4F46E5" />
+                </linearGradient>
+              </defs>
+              <circle class="mastery-gauge-bg" cx="64" cy="64" r="54" />
+              <circle class="mastery-gauge-fill" id="masteryGaugeFillCircle" cx="64" cy="64" r="54" stroke-dashoffset="339.292" />
+            </svg>
+            <div class="mastery-gauge-center">
+              <div class="mastery-gauge-pct" id="masteryGaugePct">72%</div>
+              <div class="mastery-gauge-lbl">Mastery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION 2: LEARNING METRICS ── -->
+        <div class="metrics-row" role="region" aria-label="Key learning metrics">
+          <div class="metric-card">
+            <div class="metric-card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <span class="metric-card-label">Lessons Completed</span>
+            <div class="metric-card-val" id="metricLessons">3 / 10</div>
+            <span class="metric-card-sub">Foundations tracked</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span class="metric-card-label">Challenges Passed</span>
+            <div class="metric-card-val" id="metricChallenges">2 / 3</div>
+            <span class="metric-card-sub">67% challenge pass rate</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <span class="metric-card-label">Average Hints Used</span>
+            <div class="metric-card-val" id="metricHints">1.4</div>
+            <span class="metric-card-sub">Low dependency on hints</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="metric-card-label">Time to Correct</span>
+            <div class="metric-card-val" id="metricTime">42 sec</div>
+            <span class="metric-card-sub">Average solving speed</span>
+          </div>
+        </div>
+
+        <!-- ── SECTION 3: PRE vs POST ASSESSMENT ── -->
+        <div class="pre-post-card" role="region" aria-labelledby="prePostHeading">
+          <div class="pre-post-header">
+            <h3 class="pre-post-title" id="prePostHeading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              Assessment Improvement
+            </h3>
+            <span class="demo-subtle-tag">Demo Data</span>
+          </div>
+
+          <p class="pre-post-desc">
+            Compare your understanding before and after the learning activities.
+          </p>
+
+          <div class="comparison-grid">
+            <div class="comparison-box">
+              <span class="comparison-label">Pre-Assessment</span>
+              <div class="comparison-score" id="preScoreVal">55%</div>
+              <div class="comparison-bar-track">
+                <div class="comparison-bar-fill pre" id="preBarFill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="comparison-box highlight">
+              <span class="comparison-label">Post-Assessment</span>
+              <div class="comparison-score" id="postScoreVal">80%</div>
+              <div class="comparison-bar-track">
+                <div class="comparison-bar-fill post" id="postBarFill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="comparison-box highlight">
+              <span class="comparison-label">Improvement</span>
+              <div class="comparison-score" id="improveScoreVal">+25%</div>
+              <div class="comparison-bar-track">
+                <div class="comparison-bar-fill gain" id="gainBarFill" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gain-banner">
+            <span class="gain-pill" id="gainPointsVal">+25 percentage points</span>
+            <span>Your post-assessment score indicates improved understanding after completing the learning activities.</span>
+          </div>
+        </div>
+
+        <!-- ── SECTION 4: CONCEPT MASTERY ── -->
+        <div class="concept-mastery-card" role="region" aria-labelledby="conceptMasteryHeading">
+          <div class="concept-mastery-header">
+            <h3 class="concept-mastery-title" id="conceptMasteryHeading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" aria-hidden="true">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+              Concept Mastery
+            </h3>
+            <span style="font-size: 11px; color: var(--color-text-muted);">6 Evaluated Competencies</span>
+          </div>
+
+          <div class="concepts-list" id="conceptsList">
+            <!-- Populated dynamically from progressData.concepts -->
+          </div>
+        </div>
+
+        <!-- ── SECTION 5: STRENGTHS & WEAK AREAS ── -->
+        <div class="strengths-weak-grid" role="region" aria-label="Strengths and weak areas">
+          <!-- Left: Your Strengths -->
+          <div class="sw-card">
+            <div class="sw-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <h4 class="sw-title">Your Strengths</h4>
+            </div>
+            <ul class="sw-list">
+              <li class="sw-item">
+                <span class="sw-item-num strength">1</span>
+                <span>Superposition</span>
+              </li>
+              <li class="sw-item">
+                <span class="sw-item-num strength">2</span>
+                <span>Qubits &amp; Basis States</span>
+              </li>
+              <li class="sw-item">
+                <span class="sw-item-num strength">3</span>
+                <span>Measurement</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Needs More Practice -->
+          <div class="sw-card">
+            <div class="sw-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h4 class="sw-title">Needs More Practice</h4>
+            </div>
+            <ul class="sw-list">
+              <li class="sw-item">
+                <span class="sw-item-num weak">1</span>
+                <span>Entanglement</span>
+              </li>
+              <li class="sw-item">
+                <span class="sw-item-num weak">2</span>
+                <span>Bell States</span>
+              </li>
+              <li class="sw-item">
+                <span class="sw-item-num weak">3</span>
+                <span>Quantum Gates</span>
+              </li>
+            </ul>
+
+            <button class="btn btn-outline btn-sm" id="practiceWeakBtn1" style="width: 100%; justify-content: center;" aria-label="Practice entanglement challenge">
+              Practice Entanglement
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── SECTION 6: RECENT LEARNING ACTIVITY ── -->
+        <div class="activity-card" role="region" aria-labelledby="activityHeading">
+          <div class="activity-header">
+            <h3 class="activity-title" id="activityHeading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              Recent Learning Activity
+            </h3>
+            <span style="font-size: 11px; color: var(--color-text-muted);">Learning Journey Milestones</span>
+          </div>
+
+          <div class="timeline-list">
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-check" aria-hidden="true">✓</div>
+                <span class="timeline-name">Superposition Lesson</span>
+              </div>
+              <span class="timeline-status completed">Completed</span>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-check" aria-hidden="true">✓</div>
+                <span class="timeline-name">Superposition Circuit</span>
+              </div>
+              <span class="timeline-status completed">Completed</span>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-check" aria-hidden="true">✓</div>
+                <span class="timeline-name">Hadamard Simulation</span>
+              </div>
+              <span class="timeline-status completed">Completed</span>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-check" aria-hidden="true">✓</div>
+                <span class="timeline-name">AI Tutor Explanation</span>
+              </div>
+              <span class="timeline-status completed">Completed</span>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-check" aria-hidden="true">✓</div>
+                <span class="timeline-name">Bell State Challenge</span>
+              </div>
+              <span class="timeline-status completed">Completed</span>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-circle-ready" aria-hidden="true"></div>
+                <span class="timeline-name">Post-Assessment</span>
+              </div>
+              <span class="timeline-status ready">Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION 7: ASSESSMENT SUMMARY ── -->
+        <div class="assess-summary-card" role="region" aria-labelledby="assessSummaryHeading">
+          <div class="assess-summary-header">
+            <h3 class="assess-summary-title" id="assessSummaryHeading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              Assessment Summary
+            </h3>
+            <span class="demo-subtle-tag">Demo Data</span>
+          </div>
+
+          <div class="summary-metrics-grid">
+            <div class="summary-metric-pill">
+              <span class="summary-metric-key">Pre-Assessment</span>
+              <span class="summary-metric-val" id="summaryPre">55%</span>
+            </div>
+            <div class="summary-metric-pill">
+              <span class="summary-metric-key">Post-Assessment</span>
+              <span class="summary-metric-val" id="summaryPost">80%</span>
+            </div>
+            <div class="summary-metric-pill">
+              <span class="summary-metric-key">Score Improvement</span>
+              <span class="summary-metric-val" id="summaryImprove" style="color: var(--color-success);">+25%</span>
+            </div>
+            <div class="summary-metric-pill">
+              <span class="summary-metric-key">Challenges Passed</span>
+              <span class="summary-metric-val" id="summaryChallenges">2 / 3</span>
+            </div>
+            <div class="summary-metric-pill">
+              <span class="summary-metric-key">Average Hints</span>
+              <span class="summary-metric-val" id="summaryHints">1.4</span>
+            </div>
+          </div>
+
+          <div class="summary-feedback-box">
+            Your understanding of superposition and measurement is strong. Continue practicing entanglement and Bell States to improve your mastery.
+          </div>
+
+          <div class="summary-actions-row">
+            <button class="btn btn-primary" id="practiceWeakBtn2" aria-label="Practice weak concept in challenge mode">
+              Practice Weak Concept
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+
+            <button class="btn btn-outline" id="backDashboardBtn" aria-label="Back to Dashboard">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to Dashboard
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="progress-footer" role="contentinfo">
+          <p>QuantumLeap-AI &copy; 2026 &mdash; AI-Powered Quantum Computing Education</p>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Placeholder modal (for unbuilt routes) -->
+  <div class="route-placeholder" id="routePlaceholder" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="placeholderTitle">
+    <div class="placeholder-card">
+      <div class="placeholder-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3 id="placeholderTitle" class="placeholder-title">Coming Soon</h3>
+      <p class="placeholder-text">This section is part of the QuantumLeap-AI platform and will be available soon.</p>
+      <button class="btn btn-primary" id="placeholderClose" aria-label="Close and return">Back to Progress</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/progress.js"></script>
+</body>
+</html>

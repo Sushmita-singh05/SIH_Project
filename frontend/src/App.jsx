@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Layout/Sidebar';
 
@@ -9,6 +9,7 @@ import SimulationOutput from './pages/SimulationOutput';
 import AITutor from './pages/AITutor';
 import Challenge from './pages/Challenge';
 import Progress from './pages/Progress';
+import VideoLearning from './pages/VideoLearning';
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/ai-tutor" element={<AITutor />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/progress" element={<Progress />} />
+          <Route path="/video-learning" element={<VideoLearning />} />
         </Routes>
       </div>
     </div>

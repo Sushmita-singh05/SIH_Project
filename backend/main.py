@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.api.circuit import router as circuit_router
+from backend.api.ai import router as ai_router
 
 app = FastAPI(
     title="QuantumLeap-AI Backend",
@@ -18,6 +19,12 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+        "http://localhost:5175",
+        "http://127.0.0.1:5175",
+        "http://localhost:4173",
+        "http://127.0.0.1:4173",
         "http://localhost:3000"
     ],
     allow_credentials=True,
@@ -25,8 +32,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include the circuit simulation router
+# Include API routers
 app.include_router(circuit_router)
+app.include_router(ai_router)
+
+from backend.api.video import router as video_router
+app.include_router(video_router)
 
 
 @app.get("/api/health")

@@ -14,13 +14,14 @@ import './styles/simulation-output.css';
 import './styles/ai-tutor.css';
 import './styles/challenge.css';
 import './styles/progress.css';
+import './styles/video-learning.css';
 import './styles/responsive.css';
 
 import { LearningProvider } from './context/LearningContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <LearningProvider>
         <App />
       </LearningProvider>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopHeader from '../components/Layout/TopHeader';
+import FloatingAITutorBtn from '../components/AITutor/FloatingAITutorBtn';
 import { useLearningContext } from '../context/LearningContext';
+import { buildTutorContext, saveTutorContext } from '../utils/tutorContext';
 
 const ChallengeGateSlot = memo(function ChallengeGateSlot({ gate, qIdx, sIdx, onCellClick }) {
   return (
@@ -96,6 +98,31 @@ export default function Challenge() {
     }
   }, [grid, submitChallengeAttempt]);
 
+  const getChallengeContextData = useCallback(() => {
+    const ops = [];
+    for (let q = 0; q < grid.length; q++) {
+      for (let s = 0; s < grid[q].length; s++) {
+        const g = grid[q][s];
+        if (g) ops.push({ gate: g, qubit: q, step: s });
+      }
+    }
+    return {
+      topic: currentChallenge?.title || 'Bell State Generation',
+      challenge: currentChallenge || { id: 'bell-state', title: 'Bell State Generation' },
+      circuit: { qubits: 2, operations: ops },
+      grid,
+      hintLevel: 1,
+      hintMode: true,
+      lastError: verificationResult && !verificationResult.success ? verificationResult.message : null,
+    };
+  }, [currentChallenge, grid, verificationResult]);
+
+  const handleAskTutor = useCallback(() => {
+    const ctx = buildTutorContext('challenge', getChallengeContextData());
+    saveTutorContext(ctx);
+    navigate('/ai-tutor');
+  }, [getChallengeContextData, navigate]);
+
   const handlePreFillSolution = useCallback(() => {
     setGrid([
       ['H', 'CNOT', null],
@@ -110,7 +137,7 @@ export default function Challenge() {
       <div className="challenge-container">
         {/* Challenge Objective Card */}
         <div className="card" style={{ marginBottom: '1.5rem', background: '#eff6ff', border: '1px solid #bfdbfe' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
             <div>
               <span className="badge badge-primary">Assessment Objective</span>
               <h3 style={{ margin: '0.5rem 0 0.25rem 0', color: '#1e3a8a' }}>Construct Bell State |Φ⁺⟩</h3>
@@ -119,9 +146,14 @@ export default function Challenge() {
                 2. Entangle q1 using a CNOT gate with q0 as the control.
               </p>
             </div>
-            <button className="btn btn-sm btn-outline" onClick={handlePreFillSolution}>
-              Auto-place Solution
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button className="btn btn-sm btn-outline" onClick={handleAskTutor} style={{ borderColor: '#2563eb', color: '#2563eb', fontWeight: 600 }}>
+                💡 Need a Hint?
+              </button>
+              <button className="btn btn-sm btn-outline" onClick={handlePreFillSolution}>
+                Auto-place Solution
+              </button>
+            </div>
           </div>
         </div>
 
@@ -207,6 +239,13 @@ export default function Challenge() {
           </div>
         )}
       </div>
+
+      {/* Floating AI Tutor Entry Button */}
+      <FloatingAITutorBtn
+        screen="challenge"
+        getContextData={getChallengeContextData}
+        customLabel="Need a Hint? Ask Tutor"
+      />
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopHeader from '../components/Layout/TopHeader';
+import FloatingAITutorBtn from '../components/AITutor/FloatingAITutorBtn';
 import { useLearningContext } from '../context/LearningContext';
+import { buildTutorContext, saveTutorContext } from '../utils/tutorContext';
 
 export default function Lesson() {
   const navigate = useNavigate();
@@ -11,6 +13,22 @@ export default function Lesson() {
     quizState,
     updateQuizState
   } = useLearningContext();
+
+  const getLessonContextData = useCallback(() => ({
+    topic: currentLesson?.title || 'Superposition & The Hadamard Gate',
+    lesson: currentLesson || {
+      id: 'superposition',
+      title: 'Superposition & The Hadamard Gate',
+      module: 'Module 4 · Foundations of Quantum Logic',
+    },
+    quizState,
+  }), [currentLesson, quizState]);
+
+  const handleAskTutor = useCallback(() => {
+    const ctx = buildTutorContext('lesson', getLessonContextData());
+    saveTutorContext(ctx);
+    navigate('/ai-tutor');
+  }, [getLessonContextData, navigate]);
 
   // Ensure currentLesson is set when Lesson is mounted
   useEffect(() => {
@@ -175,9 +193,24 @@ export default function Lesson() {
                 Construct a 2-qubit circuit and place the Hadamard gate on q0.
               </div>
             </div>
+
+            <button
+              className="btn btn-outline"
+              style={{ width: '100%', marginTop: '1rem', borderColor: 'var(--color-primary)', color: 'var(--color-primary)', fontWeight: 600 }}
+              onClick={handleAskTutor}
+            >
+              🤖 Ask AI Tutor to Explain
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Floating AI Tutor Entry Button */}
+      <FloatingAITutorBtn
+        screen="lesson"
+        getContextData={getLessonContextData}
+        customLabel="Ask AI Tutor"
+      />
     </div>
   );
 }

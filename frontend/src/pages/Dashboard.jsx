@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopHeader from '../components/Layout/TopHeader';
+import FloatingAITutorBtn from '../components/AITutor/FloatingAITutorBtn';
 import { useLearningContext } from '../context/LearningContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { currentLesson, currentChallenge } = useLearningContext();
+
+  const getDashboardContextData = useCallback(() => ({
+    studentProgress: {
+      overallMastery: 72,
+      completedLabs: 4,
+      studyStreakDays: 14,
+      recommendedTopic: 'Module 5: Quantum Entanglement & Bell States',
+    },
+    lesson: currentLesson,
+    challenge: currentChallenge,
+  }), [currentLesson, currentChallenge]);
 
   return (
     <>
@@ -250,6 +262,13 @@ export default function Dashboard() {
           </div>
         </section>
       </main>
+
+      {/* Floating AI Tutor Entry Button */}
+      <FloatingAITutorBtn
+        screen="dashboard"
+        getContextData={getDashboardContextData}
+        customLabel="Ask AI Tutor"
+      />
     </>
   );
 }

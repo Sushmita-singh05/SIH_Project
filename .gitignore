@@ -1,107 +1,37 @@
-2. Changes Made & Data Flow Verification
-1. 
-frontend/src/pages/CircuitBuilder.jsx
-Precise CNOT Resolution: Step operations are grouped and sorted by step index 
-s
-s.
-When the user places a CNOT coupling 
-q
-0
-q 
-0
-​
-  and 
-q
-1
-q 
-1
-​
-  (whether placing CNOT in both rows or targeting 
-q
-1
-q 
-1
-​
- ), it is mapped to:
-json
+# Dependencies
+node_modules/
+frontend/node_modules/
 
+# Production build
+dist/
+frontend/dist/
 
-{
-  "gate": "CNOT",
-  "qubit": 1,
-  "step": s,
-  "control": 0,
-  "target": 1
-}
-Logging Added: Added the exact pre-fetch payload logging:
-javascript
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
 
+# Environment Variables
+.env
+.env.local
+.env.*.local
 
-console.log("SIMULATION REQUEST:", JSON.stringify(circuitPayload, null, 2));
-2. 
-backend/quantum/circuit_parser.py
-Verified QuantumCircuit.cx(c, t):
-python
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
 
-
-elif gate in ("CNOT", "CX"):
-    c = int(control) if control is not None else 0
-    t = int(target) if target is not None else (1 if c == 0 else 0)
-    qc.cx(c, t)
-Control and target are preserved in order.
-3. 
-backend/quantum/simulator.py
-Sequence verified:
-Circuit is transpiled and theoretical Statevector.from_instruction(qc) is evaluated BEFORE measurement.
-Density matrix & partial trace are calculated per qubit via compute_bloch_coordinates(sv, num_qubits).
-qc.measure_all() is appended, followed by simulation via AerSimulator().run(..., shots=1024).
-4. 
-frontend/src/components/Visualization/BlochSphereSvg.jsx
- & 
-SimulationOutput.jsx
-Added rNorm (Bloch radius norm) support to BlochSphereSvg:
-When 
-r
-≈
-1
-r≈1 (pure state like 
-∣
-+
-⟩
-∣+⟩, 
-∣
-0
-⟩
-∣0⟩, 
-∣
-1
-⟩
-∣1⟩), renders the directed state vector to the sphere surface.
-When 
-r
-≈
-0
-r≈0 (entangled bipartite state), renders the indicator at the origin of the Bloch ball with label "q0: Entangled (Mixed state)" and an explanation indicating that the reduced subsystem is mixed due to maximal entanglement.
-3. Verification & Direct Backend Tests
-Test 1: 
-H
-H-only Circuit (
-H
-H on 
-q
-0
-q 
-0
-​
- , 2 Qubits)
-Request:
-json
-
-
-{
-  "qubits": 2,
-  "shots": 1024,
-  "operations": [{ "gate": "H", "qubit": 0, "step": 0 }]
-}
-Results:
-Co
+# Test & Debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+verified_screen.png
+frontend/verified_screen.png

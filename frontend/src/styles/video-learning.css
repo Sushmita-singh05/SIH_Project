@@ -1,0 +1,447 @@
+/* Video Learning Specific Styles */
+
+.vl-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Topic Input Layout */
+.vl-hero-section {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.vl-hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-primary), #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.vl-hero-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 2.5rem;
+}
+
+.vl-input-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.vl-input-single {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: border-color 0.2s;
+}
+
+.vl-input-single:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.vl-generate-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vl-error {
+  background: #fee2e2;
+  color: var(--color-danger);
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.vl-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vl-chip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vl-chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Lesson Player Layout */
+.lesson-player {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.lesson-header h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.lesson-scene-meta {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.scene-stage {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  min-height: 300px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.scene-narration {
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-primary);
+  padding: 1.25rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  animation: typewriter 0.6s ease both;
+  overflow: hidden;
+}
+
+.scene-key-concept {
+  display: inline-block;
+  background: #e0e7ff;
+  color: var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.quick-questions-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Scene Renderer Layout */
+.scene-renderer {
+  animation: fadeSlideIn 0.4s ease both;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.scene-renderer.active {
+  display: block;
+}
+
+.scene-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  height: 100%;
+}
+
+.scene-concept-icon {
+  font-size: 4rem;
+}
+
+.scene-concept-card {
+  background: var(--color-bg);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.scene-concept-card h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.scene-comparison {
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.comparison-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.comparison-divider {
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  align-self: center;
+}
+
+.state-vector-card {
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.state-vector-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.state-vector-card td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Controls Layout */
+.scene-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.scene-play-btn {
+  min-width: 80px;
+}
+
+.scene-counter {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.scene-progress-bar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.scene-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), #818cf8);
+  transition: width 0.3s ease;
+}
+
+/* Quiz Layout */
+.quiz-checkpoint {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.quiz-question {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.quiz-option {
+  text-align: left;
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-bg);
+}
+
+.quiz-option.selected {
+  border-color: var(--color-primary);
+  background: #eff6ff;
+}
+
+.quiz-option.correct {
+  border-color: var(--color-success);
+  background: #f0fdf4;
+}
+
+.quiz-option.incorrect {
+  border-color: var(--color-danger);
+  background: #fef2f2;
+}
+
+.quiz-submit-btn {
+  width: 100%;
+}
+
+.quiz-feedback {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.quiz-feedback.correct {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.quiz-feedback.incorrect {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.quiz-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Summary Layout */
+.lesson-summary {
+  text-align: center;
+  border: 2px solid var(--color-success);
+  border-radius: 12px;
+  padding: 2rem;
+  background: #f0fdf4;
+}
+
+.lesson-summary h3 {
+  color: var(--color-success);
+  margin-top: 0;
+}
+
+.lesson-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.lesson-summary-stats .stat-card {
+  background: var(--color-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-card span {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.stat-card strong {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.lesson-summary-takeaways {
+  text-align: left;
+  background: var(--color-surface);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.lesson-summary-takeaways h4 {
+  margin-top: 0;
+}
+
+.lesson-summary-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Animations */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typewriter {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.vl-spinner {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vl-content { padding: 1rem; }
+  .scene-comparison { flex-direction: column; }
+  .scene-controls { flex-wrap: wrap; }
+  .lesson-summary-stats { grid-template-columns: 1fr 1fr; }
+  .lesson-summary-actions { flex-direction: column; }
+  .lesson-header { flex-direction: column; }
+}

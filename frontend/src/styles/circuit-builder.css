@@ -896,3 +896,196 @@
     flex-direction: column;
   }
 }
+
+/* =============================================
+   MODE TOGGLE — Visual / Code switcher
+   ============================================= */
+.mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  border: 1px solid var(--color-border-soft);
+}
+
+.mode-toggle-btn {
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.mode-toggle-btn:hover:not(.active):not(:disabled) {
+  color: var(--color-text-primary);
+  background: var(--color-surface-2);
+}
+
+.mode-toggle-btn.active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.mode-toggle-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =============================================
+   CODE EDITOR — VS Code-like container
+   ============================================= */
+.code-editor-container {
+  background: #1e1e2e;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.code-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+}
+
+.code-editor-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-sm);
+  color: #cdd6f4;
+  font-weight: 500;
+}
+
+.code-editor-tab-icon {
+  font-size: 14px;
+}
+
+.code-editor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Apply Code button override inside dark header */
+.code-editor-actions .btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.code-editor-body {
+  display: flex;
+  position: relative;
+  min-height: 300px;
+  max-height: 520px;
+}
+
+/* Line numbers gutter */
+.code-editor-line-numbers {
+  padding: 16px 0;
+  background: #181825;
+  color: #585b70;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  text-align: right;
+  user-select: none;
+  min-width: 48px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.code-editor-line-number {
+  padding: 0 12px 0 8px;
+  height: 1.65em;
+}
+
+/* Actual text area */
+.code-editor-textarea {
+  flex: 1;
+  padding: 16px;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: auto;
+  tab-size: 4;
+  caret-color: #89b4fa;
+}
+
+.code-editor-textarea::placeholder {
+  color: #585b70;
+}
+
+.code-editor-textarea::selection {
+  background: rgba(137, 180, 250, 0.25);
+}
+
+/* Errors panel */
+.code-editor-errors {
+  border-top: 1px solid #313244;
+  background: #181825;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.code-editor-errors-header {
+  padding: 8px 16px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: #f38ba8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-editor-errors-list {
+  padding: 0 16px 12px;
+}
+
+.code-editor-error-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: var(--font-size-xs);
+  color: #f38ba8;
+  line-height: 1.55;
+}
+
+.code-editor-error-icon {
+  flex-shrink: 0;
+  font-weight: bold;
+  margin-top: 1px;
+}
+
+/* ── Code editor responsive ── */
+@media (max-width: 640px) {
+  .code-editor-body {
+    min-height: 220px;
+    max-height: 380px;
+  }
+  .code-editor-line-numbers {
+    min-width: 36px;
+    font-size: 11px;
+  }
+  .code-editor-textarea {
+    font-size: 12px;
+    padding: 12px;
+  }
+}

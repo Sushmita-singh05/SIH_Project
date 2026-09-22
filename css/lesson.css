@@ -8,7 +8,7 @@
    ============================================ */
 .lesson-content {
   flex: 1;
-  padding: var(--space-6) var(--space-8);
+  padding: var(--space-5) var(--space-6);
   max-width: 1280px;
   width: 100%;
 }
@@ -28,7 +28,7 @@
    LESSON HEADER
    ============================================ */
 .lesson-header {
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-5);
 }
 
 /* ---- Breadcrumb ---- */
@@ -88,29 +88,29 @@
 
 /* ---- Lesson Heading ---- */
 .lesson-heading {
-  font-size: var(--font-size-3xl);
-  font-weight: 800;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
   color: var(--color-text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-2);
 }
 
 .lesson-subtitle {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.65;
-  max-width: 640px;
-  margin-bottom: var(--space-4);
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: var(--space-3);
 }
 
 /* ---- Meta Row ---- */
 .lesson-meta-row {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   flex-wrap: wrap;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .lesson-meta-pill {
@@ -162,26 +162,28 @@
    ============================================ */
 .lesson-body {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: var(--space-6);
+  grid-template-columns: 1fr 296px;
+  gap: var(--space-5);
   align-items: start;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 /* ---- Left Main Column ---- */
 .lesson-main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
 /* ---- Right Aside (sticky) ---- */
 .lesson-aside {
   position: sticky;
-  top: calc(var(--header-height) + var(--space-5));
+  top: calc(var(--header-height) + var(--space-4));
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  max-height: calc(100vh - var(--header-height) - var(--space-8));
+  overflow-y: auto;
 }
 
 /* ============================================
@@ -190,21 +192,21 @@
 .concept-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-7);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
   transition: box-shadow var(--transition-base);
 }
 
 .concept-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .concept-card-header {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .concept-icon-wrap {
@@ -246,8 +248,8 @@
 .concept-text {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: var(--space-5);
+  line-height: 1.65;
+  margin-bottom: var(--space-3);
 }
 
 .concept-text strong {
@@ -262,13 +264,13 @@
   gap: var(--space-2);
   background: var(--color-primary-light);
   border: 1px solid #BFDBFE;
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
   font-size: var(--font-size-xs);
   color: #1E40AF;
   font-weight: 500;
   line-height: 1.5;
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
 }
 
 .concept-note svg {
@@ -348,9 +350,9 @@
 .state-equation-wrap {
   background: var(--color-surface-2);
   border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
-  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-3);
 }
 
 .state-equation {
@@ -440,7 +442,7 @@
 /* ============================================
    VISUAL EXPLANATION GRID
    ============================================ */
-.visual-card { padding-bottom: var(--space-5); }
+.visual-card { padding-bottom: var(--space-4); }
 
 .visual-explanation-grid {
   display: grid;
@@ -624,8 +626,8 @@
 .aside-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
   box-shadow: var(--shadow-xs);
 }
 
@@ -636,7 +638,7 @@
   font-size: var(--font-size-sm);
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 /* ---- Learning Objectives ---- */
@@ -682,23 +684,23 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .ai-tutor-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   background: var(--color-secondary-light);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--color-secondary);
   flex-shrink: 0;
 }
 
 .ai-tutor-title {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: 700;
   color: var(--color-secondary);
   flex: 1;
@@ -706,33 +708,43 @@
 }
 
 .ai-tutor-badge {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: var(--radius-full);
   background: var(--color-secondary-light);
   color: var(--color-secondary);
 }
 
 .ai-tutor-message {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-  line-height: 1.65;
+  line-height: 1.6;
   font-style: italic;
   border-left: 2px solid #C7D2FE;
   padding-left: var(--space-3);
-  margin: 0 0 var(--space-4) 0;
+  margin: 0 0 var(--space-3) 0;
 }
 
 .ai-tutor-btn {
-  width: 100%;
-  justify-content: center;
-  font-size: var(--font-size-xs);
+  width: auto;
+  display: inline-flex;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-width: 1px;
+  color: var(--color-secondary);
+  border-color: #C7D2FE;
+  opacity: 0.9;
 }
 
 /* ---- Mini Quiz Card ---- */
+.quiz-card {
+  border-left: 3px solid #D97706;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBF5 100%);
+}
+
 .quiz-header {
   display: flex;
   align-items: center;
@@ -744,8 +756,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   background: #FFF7ED;
   border-radius: var(--radius-sm);
   color: #D97706;
@@ -761,8 +773,8 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-primary);
   font-weight: 500;
-  line-height: 1.6;
-  margin: var(--space-3) 0 var(--space-3);
+  line-height: 1.55;
+  margin: var(--space-2) 0 var(--space-2);
 }
 
 /* Quiz options */
@@ -904,18 +916,18 @@
    NEXT ACTIVITY SECTION
    ============================================ */
 .next-activity-section {
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .next-activity-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-7);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
   display: flex;
   align-items: center;
-  gap: var(--space-5);
+  gap: var(--space-4);
   transition: box-shadow var(--transition-base);
   position: relative;
   overflow: hidden;
@@ -941,11 +953,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
   background: var(--color-secondary-light);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   color: var(--color-secondary);
   flex-shrink: 0;
 }
@@ -965,11 +977,11 @@
 }
 
 .next-activity-title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--color-text-primary);
-  letter-spacing: -0.02em;
-  margin-bottom: var(--space-2);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-1);
 }
 
 .next-activity-desc {
@@ -989,17 +1001,17 @@
 .lesson-journey-section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow-xs);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .journey-section-title {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
   letter-spacing: -0.01em;
 }
 
@@ -1013,26 +1025,79 @@
   padding-bottom: var(--space-1);
 }
 
-/* Reuse journey stage classes from dashboard.css */
-/* (journey-stage, journey-icon-wrap, learn-stage, etc. already defined there) */
-/* We scope the connector and stage layout specifically for the lesson page */
+/* Journey stage base styles (also used by dashboard.css) */
 .lesson-journey-container .journey-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  min-width: 80px;
+  min-width: 76px;
   text-align: center;
+}
+
+.lesson-journey-container .journey-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+/* Journey stage icon colors */
+.lesson-journey-container .learn-stage    { background: var(--color-primary-light); color: var(--color-primary); }
+.lesson-journey-container .build-stage    { background: var(--color-secondary-light); color: var(--color-secondary); }
+.lesson-journey-container .simulate-stage { background: var(--color-success-light); color: var(--color-success); }
+.lesson-journey-container .explain-stage  { background: var(--color-warning-light); color: var(--color-warning); }
+.lesson-journey-container .assess-stage   { background: #FEF2F2; color: var(--color-danger); }
+
+/* Upcoming stages are muted */
+.lesson-journey-container .journey-stage:not(.active-stage) .journey-icon-wrap {
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* Active stage ring */
+.lesson-journey-container .active-stage .journey-icon-wrap {
+  box-shadow: 0 0 0 3px var(--color-primary-ring);
+}
+
+.lesson-journey-container .journey-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.lesson-journey-container .journey-stage:not(.active-stage) .journey-label {
+  color: var(--color-text-muted);
+}
+
+.lesson-journey-container .journey-status {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lesson-journey-container .journey-status.upcoming {
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
 }
 
 .lesson-journey-container .journey-connector {
   display: flex;
   align-items: center;
   flex: 1;
-  min-width: 24px;
-  max-width: 60px;
+  min-width: 20px;
+  max-width: 50px;
   color: var(--color-border);
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .lesson-journey-container .connector-line {
@@ -1044,8 +1109,8 @@
 /* Responsive lesson adjustments */
 @media (max-width: 1024px) {
   .lesson-body {
-    grid-template-columns: 1fr 290px;
-    gap: var(--space-5);
+    grid-template-columns: 1fr 272px;
+    gap: var(--space-4);
   }
   .visual-explanation-grid {
     grid-template-columns: 1fr 1fr;
@@ -1083,13 +1148,13 @@
 
 @media (max-width: 640px) {
   .lesson-content {
-    padding: var(--space-4);
+    padding: var(--space-3) var(--space-4);
   }
   .lesson-heading {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
   }
   .concept-card {
-    padding: var(--space-5);
+    padding: var(--space-4);
   }
   .visual-explanation-grid {
     grid-template-columns: 1fr;
@@ -1108,6 +1173,6 @@
     gap: var(--space-2);
   }
   .next-activity-card {
-    padding: var(--space-5);
+    padding: var(--space-4);
   }
 }

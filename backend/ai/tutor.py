@@ -12,6 +12,24 @@ from backend.ai.hint_engine import ProgressiveHintEngine
 from backend.ai.explanation_generator import get_gemini_api_key, get_model_name
 
 
+def _sanitize_context_for_ai(context: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Returns a safe, concise copy of the TutorContext for AI prompts.
+    Drops large/heavy fields (statevectors, full counts) that are not
+    needed for pedagogy and never contains secrets or configuration.
+    """
+    safe = dict(context)
+    # Keep a compact summary of the statevector instead of the full array
+    sv = safe.get("statevector")
+    if isinstance(sv, list) and len(sv) > 20:
+        safe["statevector"] = {
+            "basisStates": len(sv),
+            "top": sv[:3],
+        }
+    # Compact probabilities only (already concise)
+    return safe
+
+
 class AITutorEngine:
     """
     Context-aware quantum learning assistant engine.
@@ -112,6 +130,8 @@ class AITutorEngine:
         bloch = ctx.get("bloch", {})
         bloch_list = bloch if isinstance(bloch, list) else ([bloch] if bloch else [])
         ops = ctx.get("circuit", {}).get("operations", []) if isinstance(ctx.get("circuit"), dict) else (ctx.get("circuit") or [])
+        progress = ctx.get("progress") or {}
+        concept_mastery = progress.get("conceptMastery", {}) if isinstance(progress, dict) else {}
 
         has_h = any(o.get("gate") == "H" for o in ops)
         has_cnot = any(o.get("gate") in ("CNOT", "CX") for o in ops)
@@ -246,6 +266,24 @@ class AITutorEngine:
             "Explain my circuit line by line."
         ]
 
+        # 0. What does my circuit do? (context-grounded circuit summary)
+        if any(k in q_lower for k in ("what does my circuit", "what does this circuit", "explain my circuit", "what does it do", "what is my circuit")):
+            gate_names = [o.get("gate", "Gate") for o in ops]
+            lines = [
+                f"Your circuit currently uses **{qubits} qubit(s)** and places **{len(ops)} gate(s)** in this order:",
+            ]
+            for op in ops:
+                g = op.get("gate", "?"); q = op.get("qubit", "?")
+                if g in ("CNOT", "CX"):
+                    lines.append(f"- **{g}** with control q{op.get('control', '?')} and target q{op.get('target', '?')}.")
+                elif g in ("SWAP", "CZ"):
+                    lines.append(f"- **{g}** between q{op.get('control', '?')} and q{op.get('target', '?')}.")
+                else:
+                    lines.append(f"- **{g}** on q{q}.")
+            if not ops:
+                lines.append("No gates have been placed yet — the qubits are still in their default |0⟩ state.")
+            return ("\n".join(lines), suggestions)
+
         # 1. Why H before CNOT?
         if "h before cnot" in q_lower or "why h" in q_lower or "why did we use h" in q_lower:
             return (
@@ -314,10 +352,27 @@ class AITutorEngine:
 
         # Default circuit summary
         gate_names = [o.get("gate", "Gate") for o in ops]
-        return (
+        summary = (
             f"Your active circuit has **{qubits} qubit(s)** with **{len(ops)} gate(s)**: "
-            f"{', '.join(gate_names) if gate_names else 'No gates placed yet'}.\n"
-            f"You can ask me to explain how each gate operates, verify your circuit, or switch to Code Mode.",
+            f"{', '.join(gate_names) if gate_names else 'No gates placed yet'}."
+        )
+        if ops:
+            detail_lines = []
+            for op in ops:
+                g = op.get("gate", "?")
+                q = op.get("qubit", "?")
+                if g in ("CNOT", "CX"):
+                    detail_lines.append(f"  - {g}: control q{op.get('control', '?')} → target q{op.get('target', '?')}")
+                elif g in ("SWAP", "CZ"):
+                    detail_lines.append(f"  - {g}: q{op.get('control', '?')} ↔ q{op.get('target', '?')}")
+                else:
+                    detail_lines.append(f"  - {g} on q{q}")
+                summary += "\n" + "\n".join(detail_lines)
+        summary += (
+            "\n\nYou can ask me to explain how each gate operates, verify your circuit, or switch to Code Mode."
+        )
+        return (
+            summary,
             suggestions
         )
 
@@ -343,6 +398,44 @@ class AITutorEngine:
             "What is the objective of this challenge?"
         ]
 
+        # Build a concise expected-vs-actual distribution summary when available
+        dist_lines = []
+        expected = ctx.get("challengeExpected") or ctx.get("expectedOutput") or {}
+        actual = ctx.get("challengeActual") or {}
+        if expected or actual:
+            states = sorted(set(list(expected.keys()) + list(actual.keys())))
+            dist_lines.append("**Expected distribution:**")
+            for s in states:
+                exp = expected.get(s, 0)
+                dist_lines.append(f"- |{s}⟩: expected ≈ {exp*100:.0f}%")
+            if actual:
+                dist_lines.append("**Your actual (simulated) distribution:**")
+                for s in states:
+                    act = actual.get(s, 0)
+                    dist_lines.append(f"- |{s}⟩: you got ≈ {act*100:.0f}%")
+            dist_block = "\n".join(dist_lines) + "\n\n"
+        else:
+            dist_block = ""
+
+        score = ctx.get("score")
+        if score is not None and ctx.get("passed") is not None:
+            dist_block += f"**Challenge status:** {'✅ Passed' if ctx['passed'] else '❌ Not passed'} · **Score: {score}/100**\n\n"
+
+        if "verif" in q_lower or "fail" in q_lower or "not working" in q_lower or "error" in q_lower or "score" in q_lower:
+            eval_res = ctx.get("evaluationResult") or ctx.get("evaluation_result") or {}
+            feedback = eval_res.get("feedback") or ctx.get("lastError") or ctx.get("last_error")
+            if not feedback and score is not None:
+                feedback = f"Your challenge result was recorded with a score of {score}/100."
+            if feedback:
+                score_str = f" (Score: {score}/100)" if score is not None else ""
+                return (
+                    f"**Simulation Evaluation Feedback{score_str}:**\n\n"
+                    f"{dist_block}"
+                    f"{feedback}\n\n"
+                    f"**Guidance Hint:**\n{hint}",
+                    suggestions
+                )
+
         if "next hint" in q_lower or "more help" in q_lower:
             next_lvl = min(3, hint_level + 1)
             hint_next = ProgressiveHintEngine.get_hint(level=next_lvl, topic=topic, current_circuit=ops)
@@ -353,7 +446,7 @@ class AITutorEngine:
 
         return (
             f"**Challenge Assistant: {title} (Hint Mode — Level {hint_level} of 3)**\n\n"
-            f"{hint}\n\n"
+            f"{dist_block}{hint}\n\n"
             f"*Try applying this concept on your circuit grid. If you need more guidance, ask for the next hint!*",
             suggestions
         )
@@ -365,7 +458,14 @@ class AITutorEngine:
         ctx: Dict[str, Any]
     ) -> tuple[str, List[str]]:
         """Handles queries on the Lesson screen."""
-        lesson = ctx.get("topic") or ctx.get("lesson") or "Superposition & The Hadamard Gate"
+        lesson_raw = ctx.get("lesson") or ctx.get("topic") or "Superposition & The Hadamard Gate"
+        if isinstance(lesson_raw, dict):
+            lesson_title = lesson_raw.get("title") or lesson_raw.get("topic") or lesson_raw.get("module", "this lesson")
+        else:
+            lesson_title = lesson_raw
+        quiz_state = ctx.get("quizState") or {}
+        quiz_submitted = quiz_state.get("isSubmitted") if isinstance(quiz_state, dict) else False
+        quiz_correct = quiz_state.get("isCorrect") if isinstance(quiz_state, dict) else None
 
         suggestions = [
             "Explain this concept simply.",
@@ -374,13 +474,31 @@ class AITutorEngine:
             "Ask me a quick check question."
         ]
 
+        # A. Student just finished the quiz — give grounded feedback
+        if quiz_submitted and quiz_correct is False:
+            return (
+                f"**{lesson_title}: quick check review.**\n\n"
+                "Not quite! Remember that the probability of measuring |0⟩ after applying the Hadamard gate "
+                "to the ground state |0⟩ is exactly 50%, because H creates the equal superposition |+⟩ = (|0⟩ + |1⟩)/√2. "
+                "The other 50% corresponds to measuring |1⟩. Try revisiting the superposition visualization and "
+                "think about what the coefficients α and β represent.",
+                suggestions
+            )
+        if quiz_submitted and quiz_correct is True:
+            return (
+                f"**{lesson_title}: well done!**\n\n"
+                "Correct — after an H gate on |0⟩, you have a 50% chance of measuring |0⟩ and a 50% chance of measuring |1⟩. "
+                "The qubit is in the superposition state |+⟩. Try building this circuit in the Circuit Builder to see it in action.",
+                suggestions
+            )
+
         if "simple" in q_lower or "explain" in q_lower:
             return (
-                f"**Simple Explanation of {lesson}:**\n\n"
-                f"Think of a classical bit like a coin lying flat on a table: it is either Heads (0) or Tails (1).\n\n"
-                f"A qubit in **superposition** is like that coin spinning rapidly on the table! "
-                f"While it spins, it is neither purely Heads nor purely Tails—it is in a dynamic mixture of both. "
-                f"Only when you slam your hand down (performing a **measurement**) does it instantly collapse into either 0 or 1.",
+                f"**Simple explanation of {lesson_title}:**\n\n"
+                "Think of a classical bit like a coin lying flat on a table: it is either Heads (0) or Tails (1).\n\n"
+                "A qubit in **superposition** is like that coin spinning rapidly on the table! "
+                "While it spins, it is neither purely Heads nor purely Tails — it is in a dynamic mixture of both. "
+                "Only when you slam your hand down (performing a **measurement**) does it instantly collapse into either 0 or 1.",
                 suggestions
             )
 
@@ -429,12 +547,17 @@ class AITutorEngine:
         """Handles queries on Dashboard and Progress screens."""
         prog = ctx.get("studentProgress", {})
         mastery = prog.get("overallMastery", 72)
-
+        concept_mastery = ctx.get("conceptMastery") or {}
+        mastered = ""
+        weak = ""
         suggestions = [
             "What should I learn next?",
             "Which topic am I weak in?",
             "Explain my overall progress."
         ]
+        if concept_mastery:
+            mastered = ", ".join(f"{k} ({v}%)" for k, v in concept_mastery.items() if isinstance(v, (int, float)) and v >= 50)
+            weak = ", ".join(f"{k} ({v}%)" for k, v in concept_mastery.items() if isinstance(v, (int, float)) and v < 50)
 
         if "next" in q_lower or "recommend" in q_lower:
             return (
@@ -447,18 +570,20 @@ class AITutorEngine:
 
         if "weak" in q_lower or "improve" in q_lower:
             return (
-                "**Diagnostic Focus Areas:**\n\n"
-                "Based on recent quiz submissions and circuit challenges:\n"
-                "1. **Phase Gates (Pauli-Z, S, T):** Review relative vs global phase.\n"
-                "2. **Multi-qubit control lines:** Practice CNOT target and control orientation.\n\n"
+                f"**Diagnostic Focus Areas (based on your current mastery):**\n\n"
+                f"{weak if weak else 'Your weakest topics are Entanglement and Bell States.'}\n\n"
                 "Completing the interactive Bell State challenge will boost your mastery score above 85%!",
                 suggestions
             )
 
+        mastery_summary = (
+            "Your concept mastery: " +
+            (", ".join(f"{k} {v}%" for k, v in concept_mastery.items()) if concept_mastery else "not yet recorded")
+        )
         return (
             f"**Your Learning Summary:**\n"
-            f"- Overall Quantum Mastery: **{mastery}% (Proficient)**\n"
-            f"- Learning Gain: **+25%** improvement since diagnostic pre-test\n"
+            f"- Overall Quantum Mastery: **{mastery}%**\n"
+            f"- {mastery_summary}\n"
             f"- Verified Labs: Superposition & Bell State simulation confirmed on Qiskit Aer.\n"
             f"Keep practicing in the Circuit Builder to unlock advanced algorithms!",
             suggestions
@@ -489,11 +614,14 @@ class AITutorEngine:
     ) -> Optional[str]:
         """Calls Gemini API with structured TutorContext if key is present."""
         screen = context.get("screen", "general")
+        # Never send large statevectors or internals to the LLM: keep the
+        # prompt pedagogical and compact (also avoids leaking internal config).
+        safe_context = _sanitize_context_for_ai(context)
         system_prompt = (
             "You are an expert, encouraging quantum computing educator for the QuantumLeap-AI platform.\n"
             "You MUST tailor your answer directly to the student's current screen context.\n"
             f"Active Screen: {screen}\n"
-            f"Context Data: {context}\n"
+            f"Context Data: {safe_context}\n"
             "Keep answers concise, pedagogical, and beginner-friendly without unnecessary jargon. "
             "Never fabricate statevector or Bloch sphere data if unavailable. "
             "If in 'challenge' screen, act in Hint Mode and do not reveal the entire solution immediately."

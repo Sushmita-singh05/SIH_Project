@@ -6,18 +6,28 @@ import { useLearningContext } from '../context/LearningContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { currentLesson, currentChallenge } = useLearningContext();
+  const { currentLesson, currentChallenge, progress, simulationResult, currentCircuit } = useLearningContext();
 
   const getDashboardContextData = useCallback(() => ({
     studentProgress: {
-      overallMastery: 72,
-      completedLabs: 4,
+      overallMastery: progress?.overallMastery || 0,
+      completedLabs: progress?.lessonsCompletedCount || 0,
       studyStreakDays: 14,
-      recommendedTopic: 'Module 5: Quantum Entanglement & Bell States',
+      recommendedTopic: 'Module 4: Superposition & The Hadamard Gate',
     },
     lesson: currentLesson,
     challenge: currentChallenge,
-  }), [currentLesson, currentChallenge]);
+  }), [progress, currentLesson, currentChallenge]);
+
+  const lessonsCount = progress?.lessonsCompletedCount || 0;
+  const totalLessons = progress?.totalLessons || 7;
+  const lessonPct = progress?.lessonProgressPercent || 0;
+
+  const challengesCount = progress?.challengesPassedCount || 0;
+  const totalChallenges = progress?.totalChallenges || 3;
+  const challengePct = progress?.challengeProgressPercent || 0;
+
+  const masteryPct = progress?.overallMastery || 0;
 
   return (
     <>
@@ -38,7 +48,7 @@ export default function Dashboard() {
           <div className="progress-grid" role="list">
 
             {/* Card 1: Lessons */}
-            <article className="progress-card" role="listitem" tabIndex="0" aria-label="Lessons Completed: 3 out of 10, 30 percent">
+            <article className="progress-card" role="listitem" tabIndex="0" aria-label={`Lessons Completed: ${lessonsCount} out of ${totalLessons}, ${lessonPct} percent`}>
               <div className="progress-card-top">
                 <div className="progress-icon-wrap lessons-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -47,17 +57,17 @@ export default function Dashboard() {
                 </div>
                 <div className="progress-card-meta">
                   <span className="progress-card-title">Lessons Completed</span>
-                  <span className="progress-card-value">3 <span className="progress-total">/ 10</span></span>
+                  <span className="progress-card-value">{lessonsCount} <span className="progress-total">/ {totalLessons}</span></span>
                 </div>
               </div>
-              <div className="progress-bar-wrap" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" aria-label="30 percent of lessons completed">
-                <div className="progress-bar lessons-bar" style={{ width: '30%' }}></div>
+              <div className="progress-bar-wrap" role="progressbar" aria-valuenow={lessonPct} aria-valuemin="0" aria-valuemax="100" aria-label={`${lessonPct} percent of lessons completed`}>
+                <div className="progress-bar lessons-bar" style={{ width: `${lessonPct}%` }}></div>
               </div>
-              <p className="progress-card-sub">30% completed</p>
+              <p className="progress-card-sub">{lessonPct}% completed</p>
             </article>
 
             {/* Card 2: Challenges */}
-            <article className="progress-card" role="listitem" tabIndex="0" aria-label="Challenges Passed: 4 out of 8, 50 percent success rate">
+            <article className="progress-card" role="listitem" tabIndex="0" aria-label={`Challenges Passed: ${challengesCount} out of ${totalChallenges}, ${challengePct} percent completed`}>
               <div className="progress-card-top">
                 <div className="progress-icon-wrap challenges-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -66,17 +76,17 @@ export default function Dashboard() {
                 </div>
                 <div className="progress-card-meta">
                   <span className="progress-card-title">Challenges Passed</span>
-                  <span className="progress-card-value">4 <span className="progress-total">/ 8</span></span>
+                  <span className="progress-card-value">{challengesCount} <span className="progress-total">/ {totalChallenges}</span></span>
                 </div>
               </div>
-              <div className="progress-bar-wrap" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="50 percent challenge success rate">
-                <div className="progress-bar challenges-bar" style={{ width: '50%' }}></div>
+              <div className="progress-bar-wrap" role="progressbar" aria-valuenow={challengePct} aria-valuemin="0" aria-valuemax="100" aria-label={`${challengePct} percent challenges completed`}>
+                <div className="progress-bar challenges-bar" style={{ width: `${challengePct}%` }}></div>
               </div>
-              <p className="progress-card-sub">50% success rate</p>
+              <p className="progress-card-sub">{challengePct}% completed</p>
             </article>
 
             {/* Card 3: Mastery */}
-            <article className="progress-card" role="listitem" tabIndex="0" aria-label="Overall Mastery: 62 percent">
+            <article className="progress-card" role="listitem" tabIndex="0" aria-label={`Overall Mastery: ${masteryPct} percent`}>
               <div className="progress-card-top">
                 <div className="progress-icon-wrap mastery-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -85,13 +95,15 @@ export default function Dashboard() {
                 </div>
                 <div className="progress-card-meta">
                   <span className="progress-card-title">Overall Mastery</span>
-                  <span className="progress-card-value">62<span className="progress-pct">%</span></span>
+                  <span className="progress-card-value">{masteryPct}<span className="progress-pct">%</span></span>
                 </div>
               </div>
-              <div className="progress-bar-wrap" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="62 percent overall mastery">
-                <div className="progress-bar mastery-bar" style={{ width: '62%' }}></div>
+              <div className="progress-bar-wrap" role="progressbar" aria-valuenow={masteryPct} aria-valuemin="0" aria-valuemax="100" aria-label={`${masteryPct} percent overall mastery`}>
+                <div className="progress-bar mastery-bar" style={{ width: `${masteryPct}%` }}></div>
               </div>
-              <p className="progress-card-sub">Keep improving</p>
+              <p className="progress-card-sub">
+                {masteryPct >= 75 ? 'Mastery achieved' : masteryPct >= 40 ? 'Proficient & growing' : 'Keep practicing'}
+              </p>
             </article>
 
           </div>

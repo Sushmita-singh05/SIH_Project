@@ -95,6 +95,98 @@ class TestAITutorContext(unittest.TestCase):
         self.assertTrue(ladder[1].startswith("Hint 2"))
         self.assertTrue(ladder[2].startswith("Hint 3"))
 
+    def test_challenge_evaluation_result_feeds_tutor(self):
+        """Challenge evaluation results (score/passed/expected/actual/feedback)
+        must be available to the AI Tutor for questions about a failed attempt."""
+        ctx = {
+            "screen": "challenge",
+            "challenge": {"id": "bell-state", "title": "Bell State Generation"},
+            "circuit": {"qubits": 2, "operations": [
+                {"gate": "H", "qubit": 0, "step": 0}
+            ]},
+            "evaluationResult": {
+                "passed": False,
+                "score": 25,
+                "expected": {"00": 0.5, "11": 0.5, "01": 0.0, "10": 0.0},
+                "actual": {"00": 0.53, "11": 0.0, "01": 0.47, "10": 0.0},
+                "feedback": "You applied a Hadamard gate, but q1 was never entangled.",
+            },
+            "score": 25,
+            "passed": False,
+        }
+        res = asyncio.run(self.engine.answer_query("Why did my verification fail?", ctx))
+        self.assertIn("Simulation Evaluation Feedback", res["reply"])
+        self.assertIn("25/100", res["reply"])
+        self.assertIn("q1 was never entangled", res["reply"])
+
+    def test_challenge_includes_expected_actual_distribution(self):
+        """The tutor surfaces the expected vs actual distribution when available."""
+        ctx = {
+            "screen": "challenge",
+            "challenge": {"id": "bell-state", "title": "Bell State Generation"},
+            "challengeExpected": {"00": 0.5, "11": 0.5, "01": 0.0, "10": 0.0},
+            "challengeActual": {"00": 0.53, "11": 0.47},
+            "passed": True,
+            "score": 97,
+        }
+        res = asyncio.run(self.engine.answer_query("Why did I pass?", ctx))
+        self.assertIn("Expected distribution", res["reply"])
+        self.assertIn("Your actual (simulated) distribution", res["reply"])
+        self.assertIn("✅ Passed", res["reply"])
+
+    def test_lesson_quiz_feedback_is_grounded(self):
+        """After a wrong quiz answer, the tutor gives feedback grounded in the lesson topic."""
+        ctx = {
+            "screen": "lesson",
+            "lesson": {"id": "superposition", "title": "Superposition & The Hadamard Gate"},
+            "quizState": {"isSubmitted": True, "isCorrect": False},
+        }
+        res = asyncio.run(self.engine.answer_query("Explain this concept", ctx))
+        self.assertIn("Not quite", res["reply"])
+        self.assertIn("Superposition & The Hadamard Gate", res["reply"])
+
+    def test_circuit_builder_describes_actual_gates(self):
+        """'What does my circuit do?' must reference the student's real gates and qubits."""
+        ctx = {
+            "screen": "circuit-builder",
+            "circuit": {"qubits": 2, "operations": [
+                {"gate": "H", "qubit": 0, "step": 0},
+                {"gate": "CNOT", "qubit": 1, "step": 1, "control": 0, "target": 1},
+            ]},
+        }
+        res = asyncio.run(self.engine.answer_query("What does my circuit do?", ctx))
+        self.assertIn("H", res["reply"])
+        self.assertIn("CNOT", res["reply"])
+        self.assertIn("q0", res["reply"])
+        self.assertIn("q1", res["reply"])
+
+    def test_simulation_references_mastery_when_available(self):
+        """The tutor calibrates explanation when concept mastery is present."""
+        ctx = {
+            "screen": "simulation-output",
+            "circuit": {"qubits": 2, "operations": [
+                {"gate": "H", "qubit": 0, "step": 0},
+                {"gate": "CNOT", "qubit": 1, "step": 1, "control": 0, "target": 1},
+            ]},
+            "counts": {"00": 512, "11": 512},
+            "shots": 1024,
+            "progress": {"conceptMastery": {"Entanglement": 45, "Bell State": 30}},
+        }
+        res = asyncio.run(self.engine.answer_query("Why am I getting only 00 and 11?", ctx))
+        self.assertIn("00", res["reply"])
+        self.assertIn("11", res["reply"])
+
+    def test_dashboard_uses_real_mastery(self):
+        """Progress replies should surface the student's actual concept mastery."""
+        ctx = {
+            "screen": "progress",
+            "studentProgress": {"overallMastery": 62},
+            "conceptMastery": {"Entanglement": 45, "Bell State": 30, "Superposition": 85},
+        }
+        res = asyncio.run(self.engine.answer_query("Which topic am I weak in?", ctx))
+        self.assertIn("Entanglement", res["reply"])
+        self.assertIn("Bell State", res["reply"])
+
 
 if __name__ == "__main__":
     unittest.main()

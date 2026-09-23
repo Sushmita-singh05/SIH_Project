@@ -160,8 +160,8 @@ async function runTests() {
   console.log('Ask AI Tutor Info:', tutorInfo);
 
   // 9. Save Screenshot
-  await page.screenshot({ path: 'c:\\Users\\sushm\\OneDrive\\Desktop\\Quantum_sih\\frontend\\verified_ai_visual_learning.png', fullPage: true });
-  console.log('Saved screenshot to verified_ai_visual_learning.png');
+  await page.screenshot({ path: 'c:\\Users\\sushm\\OneDrive\\Desktop\\Quantum_sih\\docs\\screenshots\\verified_ai_visual_learning.png', fullPage: true });
+  console.log('Saved screenshot to docs/screenshots/verified_ai_visual_learning.png');
 
   console.log('\nTOTAL RUNTIME ERRORS:', errors.length);
   if (errors.length > 0) {

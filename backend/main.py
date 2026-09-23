@@ -39,6 +39,13 @@ app.include_router(ai_router)
 from backend.api.video import router as video_router
 app.include_router(video_router)
 
+from backend.api.progress import router as progress_router
+app.include_router(progress_router)
+
+from backend.api.challenge import router as challenge_router
+app.include_router(challenge_router)
+
+
 
 @app.get("/api/health")
 async def health_check():

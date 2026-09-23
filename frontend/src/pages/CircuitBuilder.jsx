@@ -99,6 +99,8 @@ export default function CircuitBuilder() {
     updateCurrentCircuit,
     updateSimulationResult,
     setLastError,
+    progress,
+    lastUserAction,
   } = useLearningContext();
 
   // ── Initialise from Context / localStorage / defaults ──
@@ -277,7 +279,9 @@ export default function CircuitBuilder() {
     selectedGate,
     code: codeText || operationsToQiskitCode(operations, numQubits),
     errors: codeErrors,
-  }), [mode, numQubits, operations, selectedGate, codeText, codeErrors]);
+    progress,
+    lastAction: lastUserAction,
+  }), [mode, numQubits, operations, selectedGate, codeText, codeErrors, progress, lastUserAction]);
 
   const handleAskTutor = useCallback(() => {
     const screen = mode === 'code' ? 'code-mode' : 'circuit-builder';

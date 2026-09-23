@@ -43,6 +43,48 @@ export async function simulateCircuit(circuitData, backend = 'qiskit-aer') {
 }
 
 /**
+ * Submits a quantum challenge circuit to the backend for Qiskit Aer simulation
+ * and benchmark evaluation.
+ * @param {string} challengeId - e.g. 'bell-state'
+ * @param {Object} circuitData - { qubits, shots, operations }
+ * @returns {Promise<Object>} Evaluation result including passed, score, feedback, expected, and actual distributions.
+ */
+export async function evaluateChallenge(challengeId, circuitData) {
+  const payload = {
+    challenge_id: challengeId || 'bell-state',
+    qubits: circuitData.qubits || 2,
+    shots: circuitData.shots || 1024,
+    operations: circuitData.operations || []
+  };
+
+  let response;
+  try {
+    response = await fetch(API_BASE_URL + '/api/challenge/evaluate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch (netErr) {
+    throw new Error(
+      'Quantum simulation backend is unreachable. Please ensure the FastAPI server is running on port 8010.'
+    );
+  }
+
+  if (!response.ok) {
+    let errorMsg = response.statusText;
+    try {
+      const errJson = await response.json();
+      if (errJson && errJson.detail) errorMsg = errJson.detail;
+    } catch (_) {}
+    throw new Error(errorMsg || `Challenge simulation evaluation failed (${response.status})`);
+  }
+
+  return await response.json();
+}
+
+/**
  * Fetches the list of registered quantum simulation backends from the API.
  * @returns {Promise<Array<{id: string, name: string, status: string, is_default: boolean}>>}
  */

@@ -17,6 +17,8 @@ export function buildTutorContext(screen, data = {}) {
     screen: screen || 'dashboard',
     timestamp: Date.now(),
     topic: data.topic || null,
+    lastAction: data.lastAction || data.lastUserAction || null,
+    progress: data.progress || null,
   };
 
   // 1. Simulation Output context
@@ -32,7 +34,12 @@ export function buildTutorContext(screen, data = {}) {
     context.probabilities = data.probabilities || {};
     context.statevector = Array.isArray(data.statevector) && data.statevector.length > 0 ? data.statevector : null;
     context.bloch = data.bloch || data.blochSpheres || [];
+    context.error = data.error || data.lastError || null;
+    context.executionTimeMs = data.executionTimeMs ?? null;
     context.userPrompt = data.userPrompt || null;
+    if (data.progress) {
+      context.progress = data.progress;
+    }
   }
 
   // 2. Circuit Builder & Code Mode context
@@ -46,7 +53,11 @@ export function buildTutorContext(screen, data = {}) {
     context.selectedGate = data.selectedGate || null;
     context.code = data.code || '';
     context.errors = data.errors || [];
+    context.lastAction = data.lastAction || data.lastUserAction || null;
     context.userPrompt = data.userPrompt || null;
+    if (data.progress) {
+      context.progress = data.progress;
+    }
   }
 
   // 3. Challenge context
@@ -54,13 +65,24 @@ export function buildTutorContext(screen, data = {}) {
     context.topic = data.challenge?.title || 'Quantum Challenge';
     context.challenge = data.challenge || { id: 'bell-state', title: 'Bell State Generation' };
     context.circuit = {
-      qubits: data.qubits || 2,
-      operations: data.operations || [],
+      qubits: data.circuit?.qubits || data.qubits || 2,
+      operations: data.circuit?.operations || data.operations || [],
       grid: data.grid || null,
     };
     context.hintLevel = data.hintLevel || 1;
     context.hintMode = true;
+    context.lastError = data.lastError || null;
+    context.evaluationResult = data.evaluationResult || null;
+    context.challengeExpected = data.expectedOutput || data.challenge?.expected || data.evaluationResult?.expected || null;
+    context.challengeActual = data.actualOutput || data.evaluationResult?.actual || null;
+    context.score = data.score ?? data.evaluationResult?.score ?? null;
+    context.passed = data.passed ?? data.evaluationResult?.passed ?? null;
+    context.feedback = data.feedback || data.evaluationResult?.feedback || null;
+    context.lastAction = data.lastAction || data.lastUserAction || null;
     context.userPrompt = data.userPrompt || null;
+    if (data.progress) {
+      context.progress = data.progress;
+    }
   }
 
   // 4. Lesson context
@@ -71,19 +93,29 @@ export function buildTutorContext(screen, data = {}) {
       title: 'Superposition & The Hadamard Gate',
       module: 'Module 4 · Foundations of Quantum Logic',
     };
+    context.quizState = data.quizState ?? null;
+    context.lastAction = data.lastAction || data.lastUserAction || null;
     context.userPrompt = data.userPrompt || null;
+    if (data.progress) {
+      context.progress = data.progress;
+    }
   }
 
   // 5. Dashboard & Progress context
   else if (screen === 'dashboard' || screen === 'progress') {
     context.topic = 'Learning Progress & Next Steps';
     context.studentProgress = data.studentProgress || {
-      overallMastery: 72,
-      completedLabs: 4,
-      studyStreakDays: 14,
-      recommendedTopic: 'Module 5: Quantum Entanglement & Bell States',
+      overallMastery: 0,
+      completedLabs: 0,
+      studyStreakDays: 1,
+      recommendedTopic: 'Module 4: Superposition & The Hadamard Gate',
     };
+    context.conceptMastery = data.progress?.conceptMastery || null;
+    context.lastAction = data.lastAction || data.lastUserAction || null;
     context.userPrompt = data.userPrompt || null;
+    if (data.progress) {
+      context.progress = data.progress;
+    }
   }
 
   else if (screen === 'video-learning') {

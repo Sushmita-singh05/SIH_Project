@@ -1,0 +1,13 @@
+import puppeteer from 'puppeteer';
+const BASE = 'http://localhost:5173';
+const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+const page = await browser.newPage();
+page.setDefaultTimeout(12000);
+await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+await page.evaluate(() => localStorage.clear());
+await new Promise((r) => setTimeout(r, 400));
+await page.goto(`${BASE}/lesson`, { waitUntil: 'domcontentloaded' });
+await new Promise((r) => setTimeout(r, 700));
+const labels = await page.evaluate(() => [...document.querySelectorAll('label')].map(l => l.textContent.trim()));
+console.log('labels:', labels);
+await browser.close();

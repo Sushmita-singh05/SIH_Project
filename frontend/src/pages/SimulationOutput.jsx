@@ -18,6 +18,8 @@ export default function SimulationOutput() {
     updateSimulationResult,
     currentCircuit,
     setLastError,
+    progress,
+    lastUserAction,
   } = useLearningContext();
 
   // Multi-backend state
@@ -242,7 +244,9 @@ export default function SimulationOutput() {
     statevector: simData.statevector,
     bloch: simData.blochSpheres || [],
     userPrompt: optionalQuestion || null,
-  }), [simData, operations, selectedBackend, shots, counts]);
+    progress,
+    lastAction: lastUserAction,
+  }), [simData, operations, selectedBackend, shots, counts, progress, lastUserAction]);
 
   const handleAskTutor = useCallback((optionalQuestion = null) => {
     const data = getSimContextData(optionalQuestion);

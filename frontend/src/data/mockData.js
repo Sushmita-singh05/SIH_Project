@@ -1,5 +1,18 @@
 // Mock data for QuantumLeap-AI React application
 
+export const QUANTUM_CONCEPTS = [
+  'Qubit',
+  'Superposition',
+  'Hadamard',
+  'Measurement',
+  'Entanglement',
+  'Bell State',
+  'CNOT'
+];
+
+export const TOTAL_LESSONS = 7;
+export const TOTAL_CHALLENGES = 3;
+
 export const AppData = {
   user: {
     name: "Alex Mercer",
